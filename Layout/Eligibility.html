@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Check Eligibility</title>
+</head>
+<body>
+<div w3-include-html="nav.html"></div>
+<img src = 'assets/financing1.jpg' width="1349px;" class="img-fluid" alt="Responsive image" />
+
+<div class="bg-primary" style="color:#000000;padding:50px;background-color:#d3d3d3;" id="affordability">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 text-center">
+                <h2 class="margin-top-0 text-primary">Calculate Affordability</h2>
+                <br>
+                <p class="text-faded">
+                    Check if you have met the eligibility conditions to buy a new properties and apply for bank loan
+                </p>
+                <a href="#three" class="btn btn-info btn-xl page-scroll;">Learn More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="form" onload='hideTotal()' style="color:#000000;background-color:#fff;">
+    <div class="container">
+            <form action="" id="eligibilityform" onsubmit="return false;" class="form-horizontal;">
+                <div>
+                    <div class="cont_order mx-auto" style="margin-bottom:10px;">
+                        <fieldset>
+                            <div class="row col-md-12">
+                            <span class="col-md-6">
+                            <legend>Loan Type</legend>
+                            <label style="margin-right:50px;" class='radiolabel'><input type="radio"  name="selectedcake" value="Round6" onclick="calculateTotal()" />   5 Years Loan</label>
+                            <label style="margin-right:50px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="Round8" onclick="calculateTotal()" />  10 Years Loan</label><br/>
+                            <label style="margin-right:41px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="Round10" onclick="calculateTotal()" />  20 Years Loan</label>
+                            <label style="margin-right:50px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="Round12" onclick="calculateTotal()" />  30 Years Loan</label><br/>
+                            </span>
+
+                            <span class ="col-md-6" id="result-box" style="width:400px;height:200px;background-color:#d3d3d3;font-size:20px;padding:12px;float:right;">My Maximum Loan Amount<br /><strong>$
+                                <div id="totalPrice" style="font-size:100px;color:#fff;text-align:center"></div></strong>
+                            </span>
+                            </div>
+
+                            <div class="row col-md-12">
+                            <legend>Personal Details</legend>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="textinput">Name</label>
+                                <div class="col-md-4">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group" >
+                                <label class="col-md-2 control-label" for="textinput">Monthly Salary</label>
+                                <div class="col-md-4">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <legend>Financial Commitment</legend>
+                            <div class="form-group" >
+                                <label class="col-md-2 control-label" for="textinput">Personal Savings</label>
+                                <div class="col-md-4">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group" >
+                                <label class="col-md-2 control-label" for="textinput">CPF Savings</label>
+                                <div class="col-md-4"  style="margin-bottom:25px!important;">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="textinput">Housing Grant</label>
+                                <div class="col-md-4">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group" >
+                                <label class="col-md-2 control-label" for="textinput">Insurance</label>
+                                <div class="col-md-4">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Options for payment</label>
+                                <div class="col-md-4">
+                                    <select id="user-factor" name='userfactor' onchange="calculateTotal()">
+                                        <option value="None">Downpayment</option>
+                                        <option value="Lemon">Monthly Home Loan Payment</option>
+                                        <option value="Custard">Custard($5)</option>
+                                        <option value="Fudge">Fudge($7)</option>
+                                        <option value="Mocha">Mocha($8)</option>
+                                        <option value="Raspberry">Raspberry($10)</option>
+                                        <option value="Pineapple">Pineapple($5)</option>
+                                        <option value="Dobash">Dobash($9)</option>
+                                        <option value="Mint">Mint($5)</option>
+                                        <option value="Cherry">Cherry($5)</option>
+                                        <option value="Apricot">Apricot($8)</option>
+                                        <option value="Buttercream">Buttercream($7)</option>
+                                        <option value="Chocolate Mousse">Chocolate Mousse($12)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <input type="button" class="btn btn-info" id='submit' value='Save Est Loan Amount' onclick="calculateTotal()" />
+                </div>
+            </form>
+
+    </div>
+</section>
+
+<section class="container-fluid" id="apply-loan" style="color:#000000">
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+            <h2 class="text-center text-primary">My property budget is</h2>
+            <hr>
+            <div class="media wow fadeInRight">
+                <h3>Home Loan ($)</h3>
+                <div class="media-body media-middle">
+                    <p>What could be easier? Get started fast with this landing page starter theme.</p>
+                </div>
+                <div class="media-right">
+                    <i class="icon-lg ion-ios-bolt-outline"></i>
+                </div>
+            </div>
+            <hr>
+            <div class="media wow fadeIn">
+                <h3>Downpayment ($)</h3>
+                <div class="media-left">
+                    <a href="#alertModal" data-toggle="modal" data-target="#alertModal"><i class="icon-lg ion-ios-cloud-download-outline"></i></a>
+                </div>
+                <div class="media-body media-middle">
+                    <p>Yes, please. Grab it for yourself, and make something awesome with this.</p>
+                </div>
+            </div>
+            <hr>
+            <div class="media wow fadeInRight">
+                <h3>Loan Period</h3>
+                <div class="media-body media-middle">
+                    <p>Because you don't want your Bootstrap site, to look like a Bootstrap site.</p>
+                </div>
+                <div class="media-right">
+                    <i class="icon-lg ion-ios-snowy"></i>
+                </div>
+            </div>
+            <hr>
+            <div class="media wow fadeIn">
+                <h3>Estimated home loan monthly repayment ($)</h3>
+                <div class="media-left">
+                    <i class="icon-lg ion-ios-heart-outline"></i>
+                </div>
+                <div class="media-body media-middle">
+                    <p>There's good reason why Bootstrap is the most used frontend framework in the world.</p>
+                </div>
+            </div>
+            <hr>
+            <div class="media wow fadeInRight">
+                <h3>Edit either the downpayment or monthly home loan repayment to see how your property budget changes.</h3>
+                <a href="#three" class="btn btn-info btn-xl page-scroll;">Change Values</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    includeHTML();
+    function includeHTML() {
+        var z, i, elmnt, file, xhttp;
+        /*loop through a collection of all HTML elements:*/
+        z = document.getElementsByTagName("*");
+        for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            /*search for elements with a certain atrribute:*/
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+            /*make an HTTP request using the attribute value as the file name:*/
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                            /*remove the attribute, and call this function once more:*/
+                            elmnt.removeAttribute("w3-include-html");
+                            includeHTML();
+                }
+            }
+            xhttp.open("GET", file, true);
+            xhttp.send();
+            /*exit the function:*/
+            return;
+            }
+         }
+    }
+
+    //Set up an associative array
+//The keys represent the size of the cake
+//The values represent the cost of the cake i.e A 10" cake cost's $35
+var loan_prices = new Array();
+loan_prices["Round6"]=20;
+loan_prices["Round8"]=25;
+loan_prices["Round10"]=35;
+loan_prices["Round12"]=75;
+
+
+var factor_options = new Array();
+factor_options["None"]=0;
+factor_options["Lemon"]=5;
+factor_options["Custard"]=5;
+factor_options["Fudge"]=7;
+factor_options["Mocha"]=8;
+factor_options["Raspberry"]=10;
+factor_options["Pineapple"]=5;
+factor_options["Dobash"]=9;
+factor_options["Mint"]=5;
+factor_options["Cherry"]=5;
+factor_options["Apricot"]=8;
+factor_options["Buttercream"]=7;
+factor_options["Chocolate Mousse"]=12;
+
+function getCalculatedPrice() {
+	var selectedFactorOption = document.getElementsByName('selectedcake');
+
+	for (i=0; i < selectedFactorOption.length; i++) {
+		if (selectedFactorOption[i].checked) {
+			user_input = selectedFactorOption[i].value;
+		}
+	}
+
+	return loan_prices[user_input];
+}
+
+function getFactorPrice() {
+	var factorSelect = document.getElementById('user-factor');
+
+	//alert(factor_options[factorSelect.value]);
+
+	return factor_options[factorSelect.value];
+}
+
+function getLoanOption() {
+	var isLoanSelected = document.getElementById('includeLoans');
+
+	if(isLoanSelected.checked) {
+		return(5);
+	} else {
+		return(0);
+	}
+}
+
+function getInsuranceCost() {
+	var isInsuranceSelected = document.getElementById('includeInsurance');
+
+	if(isInsuranceSelected.checked) {
+		return(20);
+	} else {
+		return(0);
+	}
+}
+
+function calculateTotal() {
+	var total = getCalculatedPrice() + getFactorPrice() + getLoanOption() + getInsuranceCost();
+	var totalEl = document.getElementById('totalPrice');
+
+	document.getElementById('totalPrice').innerHTML = total;
+	totalEl.style.display = 'block';
+}
+
+function hideTotal() {
+	var totalEl = document.getElementById('totalPrice');
+	totalEl.style.display = 'none';
+}
+  </script>
+</body>
+</html>
