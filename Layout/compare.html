@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comparing Property</title>
+</head>
+<body>
+<div w3-include-html="nav.html"></div>
+<img src = 'assets/financing.jpg' width="1349px;" class="img-fluid" alt="Responsive image" />
+<div class="row col-md-12" id="input-section" style="margin-top:100px;margin-bottom:100px;padding-bottom:10px;color:#000000;text-align:center;">
+    <div class="row"><h1 style="color:#003b70;"><strong>Compare 2 Properties at a Time</strong></h1></div>
+    <div id="compare1-section"  class="col-sm-6 col-md-6" style="padding:50px;">
+        <div class="col-md-12">
+            <div class="listingSearchLabel">Property 1</div>
+        </div>
+        <form autocomplete="off" action="/">
+            <div class="col-md-12 autocomplete" >
+                <input id="input1" class="propertyInput" type="text" placeholder="Property Area Postal Code" style="width:200px;">
+            </div>
+        </form>
+    </div>
+
+    <div id="compare2-section"  class="col-sm-4 col-md-6 " style="display: inline-block;padding:50px; ">
+        <div class="col-md-12">
+            <div class="listingSearchLabel">Property 2</div>
+        </div>
+        <form autocomplete="off" action="/">
+            <div class="col-md-12 autocomplete" >
+                <input id="input2" class="propertyInput" type="text" placeholder="Property Area Postal Code" style="width:200px;">
+            </div>
+        </form>
+    </div>
+    <div class="row"><input type="button" class="btn btn-primary" style="width:150px;display: inline-block" value='Compare' /></div>
+
+</div>
+
+<section class="pricing py-5" style="background-color:#fff;color:#000000; ">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-6 col-md-6" >
+                <div class="card mb-5 mb-lg-0" style="background-color:#d3d3d3;padding:30px;">
+                    <div class="card-body">
+                        <h5 class="card-title text-muted text-uppercase text-center">Free</h5>
+                        <h6 class="card-price text-center">$0<span class="period">/month</span></h6>
+                        <hr>
+                        <ul class="fa-ul">
+                            <li><span class="fa-li"><i class="fa fa-check"></i></span>Single User</li>
+                            <li><span class="fa-li"><i class="fas fa-check"></i></span>5GB Storage</li>
+                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Public Projects</li>
+                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Unlimited Private Projects</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Dedicated Phone Support</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Free Subdomain</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Monthly Status Reports</li>
+                        </ul>
+                        <a href="#" class="btn btn-block btn-primary text-uppercase">Button</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Plus Tier -->
+            <div class="col-lg-6 col-md-6">
+                <div class="card mb-5 mb-lg-0" style="background-color:#d3d3d3;padding:30px;">
+                    <div class="card-body">
+                        <h5 class="card-title text-muted text-uppercase text-center">Plus</h5>
+                        <h6 class="card-price text-center">$9<span class="period">/month</span></h6>
+                        <hr>
+                        <ul class="fa-ul">
+                            <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>5 Users</strong></li>
+                            <li><span class="fa-li"><i class="fas fa-check"></i></span>50GB Storage</li>
+                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Public Projects</li>
+                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>
+                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Private Projects</li>
+                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Dedicated Phone Support</li>
+                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Free Subdomain</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Monthly Status Reports</li>
+                        </ul>
+                        <a href="#" class="btn btn-block btn-primary text-uppercase">Button</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+<script>
+    includeHTML();
+    function includeHTML() {
+        var z, i, elmnt, file, xhttp;
+        /*loop through a collection of all HTML elements:*/
+        z = document.getElementsByTagName("*");
+        for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            /*search for elements with a certain atrribute:*/
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+            /*make an HTTP request using the attribute value as the file name:*/
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                            /*remove the attribute, and call this function once more:*/
+                            elmnt.removeAttribute("w3-include-html");
+                            includeHTML();
+                }
+            }
+            xhttp.open("GET", file, true);
+            xhttp.send();
+            /*exit the function:*/
+            return;
+            }
+         }
+    }
+
+
+    var property = ["Bishan S787878","Marymount S121212", "Upper Thomson S393939"];
+
+    autocomplete(document.getElementById("input1"), property);
+
+    function autocomplete(inp, arr) {
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+              b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+      x[i].parentNode.removeChild(x[i]);
+    }
+  }
+}
+/*execute a function when someone clicks in the document:*/
+document.addEventListener("click", function (e) {
+    closeAllLists(e.target);
+});
+}
+
+  </script>
+</body>
+</html>
