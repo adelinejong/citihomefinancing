@@ -50,7 +50,7 @@
                             </span>
 
                              <span class ="col-md-5" id="result-box" style="position: relative;width:300px;height:200px;background-color:#888888;font-size:20px;padding:12px;float:right;">My Maximum Loan Amount<br /><strong>$
-                                <div id="totalPrice" style="font-size:100px;color:#fff;text-align:center"></div></strong>
+                                <div id="totalPrice" style="font-size:70px;color:#fff;text-align:center"></div></strong>
                             </span>
                             </div>
 
@@ -60,13 +60,13 @@
                             <div class="form-group">
                                 <label class="col-md-1 control-label" for="ageinput">Age</label>
                                 <div class="col-md-1">
-                                    <input id="ageinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+                                    <input id="ageinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-1 control-label" for="residentinput">Residency</label>
                                 <div class="col-md-3">
-                                    <select id="residentinput" name="selectbasic" class="form-control">
+                                    <select id="residentinput" name="selectbasic" class="form-control" onchange="calculateTotal()">
                                         <option value="singaporean">Singaporean/PR</option>
                                         <option value="foreigner">Foreigner</option>
                                     </select>
@@ -76,17 +76,17 @@
                             <div class="form-group" >
                                 <label class="col-md-2 control-label" for="salaryinput">Monthly Salary</label>
                                 <div class="col-md-4">
-                                    <input class="salaryinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+                                    <input id="salaryinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
 
                                 </div>
                             </div>
 
-
+                            <br />
                             <legend>Financial Commitment</legend>
                             <div class="form-group" >
                                 <label class="col-md-2 control-label" for="savingsinput">Personal Savings</label>
                                 <div class="col-md-4">
-                                    <input id="savingsinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+                                    <input id="savingsinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
 
                                 </div>
                             </div>
@@ -94,32 +94,33 @@
                             <div class="form-group" >
                                 <label class="col-md-2 control-label" for="cpfinput">CPF Savings in Ordinary Account</label>
                                 <div class="col-md-4"  style="margin-bottom:25px!important;">
-                                    <input id="cpfinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+                                    <input id="cpfinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
 
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label" for="textinput">Housing Grant</label>
-                                <small><a href="https://services2.hdb.gov.sg/webapp/BP13EligCheck/BP13SHome?strSystem=CHECK">Applying for an HDB Housing Loan</a></small>
+                                <label class="col-md-2 control-label" for="grantinput">Housing Grant<br />
+                                    <small><a href="https://services2.hdb.gov.sg/webapp/BP13EligCheck/BP13SHome?strSystem=CHECK">Redirect to apply HDB Housing Loan</a></small>
+                                </label>
                                 <div class="col-md-4">
-                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+                                    <input id="grantinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
 
                                 </div>
                             </div>
 
                             <div class="form-group" >
-                                <label class="col-md-2 control-label" for="textinput">Monthly Debt i.e. Credit Cards, Loans</label>
+                                <label class="col-md-2 control-label" for="debtinput">Monthly Debt i.e. Credit Cards, Loans</label>
                                 <div class="col-md-4">
-                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+                                    <input id="debtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
 
                                 </div>
                             </div>
 
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Property Type</label>
-                                <div class="col-md-6">
+                                <label class="col-md-4 control-label"></label>
+                                <div class="col-md-5">
                                     <select class="form-control" id="user-factor" name='userfactor' onchange="calculateTotal()">
                                         <option value="public">Public HDB</option>
                                         <option value="private">Private</option>
@@ -131,7 +132,7 @@
 
                         </fieldset>
                     </div>
-                    <input type="button" class="btn btn-info" id='submit' value='Save Est Loan Amount' onclick="calculateTotal()" />
+
                 </div>
             </form>
 
@@ -209,10 +210,9 @@
     }
 
 
+var inflow = getSalary() + getSavings() + getCPF() + getGrant() ;
 
-
-
-
+var outflow = getDebt();
 
 
 var loan_prices = new Array();
@@ -226,10 +226,11 @@ loan_prices["35year"]=35;
 
 
 var factor_options = new Array();
-factor_options["public"]=100;
-factor_options["private"]=200;
+factor_options["public"]=400000;
+factor_options["private"]=90000000;
 
-function getCalculatedPrice() {
+function getHousingPrice() {
+    var user_input= 0;
 	var selectedFactorOption = document.getElementsByName('selectedcake');
 
 	for (i=0; i < selectedFactorOption.length; i++) {
@@ -241,7 +242,7 @@ function getCalculatedPrice() {
 	return loan_prices[user_input];
 }
 
-function getFactorPrice() {
+function getLoanYear() {
 	var factorSelect = document.getElementById('user-factor');
 
 	//alert(factor_options[factorSelect.value]);
@@ -249,28 +250,70 @@ function getFactorPrice() {
 	return factor_options[factorSelect.value];
 }
 
-function getLoanOption() {
-	var isLoanSelected = document.getElementById('includeLoans');
-
-	if(isLoanSelected.checked) {
-		return(5);
-	} else {
-		return(0);
-	}
+function getAge() {
+	return document.getElementById('ageinput').value;
 }
 
-function getInsuranceCost() {
-	var isInsuranceSelected = document.getElementById('includeInsurance');
-
-	if(isInsuranceSelected.checked) {
-		return(20);
-	} else {
-		return(0);
-	}
+function getResidency() {
+	return document.getElementById('residentinput').value;
 }
+
+
+function getSalary() {
+	return document.getElementById('salaryinput').value;
+}
+
+function getSavings() {
+	return document.getElementById('savingsinput').value;
+}
+
+function getCPF() {
+    var cpf = document.getElementById('cpfinput').value;
+    var reduceValuationIndex = 0.8; //20% lower than org
+    if(getAge() > 55){
+        if(cpf > 16100 ){
+            cpfcap = reduceValuationIndex*1.2*getHousingPrice();
+
+            if(cpfcap > cpf ){
+                return cpf;
+            }else{
+                return cpfcap;
+            }
+        }else{
+            return 0;
+        }
+    }else{
+        if(cpf > 17100){
+            cpfcap = reduceValuationIndex*1.2*getHousingPrice();
+
+            if(cpfcap > cpf ){
+                return cpf;
+            }else{
+                return cpfcap;
+            }
+
+        }else{
+            return 0;
+        }
+    }
+
+	return 0;
+}
+
+function getGrant() {
+	return document.getElementById('grantinput').value;
+}
+
+function getDebt() {
+	return document.getElementById('debtinput').value;
+}
+
+
+
 
 function calculateTotal() {
-	var total = getCalculatedPrice() + getFactorPrice() ;
+    var total =0;
+	total = Math.abs(getHousingPrice() -((getSalary() - getDebt())*getLoanYear()*12 + getSavings() + getCPF() + getGrant())) ;
 	var totalEl = document.getElementById('totalPrice');
 
 	document.getElementById('totalPrice').innerHTML = total;
