@@ -32,13 +32,13 @@
                             <div class="row col-md-12">
                             <span class="col-md-7">
                             <legend>Desired Loan Tenure</legend>
-                            <label style="margin-right:50px;" class='radiolabel'><input type="radio"  name="selectedcake" value="5year" onclick="calculateTotal()" />   5 Years Loan</label>
-                            <label style="margin-right:50px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="5year" onclick="calculateTotal()" />  10 Years Loan</label>
-                            <label style="margin-right:41px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="15year" onclick="calculateTotal()" />  15 Years Loan</label>
-                            <label style="margin-right:50px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="20year" onclick="calculateTotal()" />  20 Years Loan</label><br/>
-                                <label style="margin-right:50px;" class='radiolabel'><input type="radio"  name="selectedcake" value="25year" onclick="calculateTotal()" />   25 Years Loan</label>
-                            <label style="margin-right:50px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="30year" onclick="calculateTotal()" />  30 Years Loan</label>
-                            <label style="margin-right:41px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="35year" onclick="calculateTotal()" />  35 Years Loan</label>
+                            <label style="margin-right:50px;" class='radiolabel'><input type="radio"  name="selectedcake" value="5year" onclick="calculateMonthlyPayment();" />   5 Years Loan</label>
+                            <label style="margin-right:50px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="5year" onclick="calculateMonthlyPayment();" />  10 Years Loan</label>
+                            <label style="margin-right:41px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="15year" onclick="calculateMonthlyPayment();" />  15 Years Loan</label>
+                            <label style="margin-right:50px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="20year" onclick="calculateMonthlyPayment();" />  20 Years Loan</label><br/>
+                                <label style="margin-right:50px;" class='radiolabel'><input type="radio"  name="selectedcake" value="25year" onclick="calculateMonthlyPayment();" />   25 Years Loan</label>
+                            <label style="margin-right:50px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="30year" onclick="calculateMonthlyPayment();" />  30 Years Loan</label>
+                            <label style="margin-right:41px;"  class='radiolabel'><input type="radio"  name="selectedcake" value="35year" onclick="calculateMonthlyPayment();" />  35 Years Loan</label>
 
                             <div style="margin:20px;">
                                 <a href="#"><button class="btn btn-primary active" style="border-radius:5px;">
@@ -52,6 +52,10 @@
                              <span class ="col-md-5" id="result-box" style="position: relative;width:300px;height:200px;background-color:#888888;font-size:20px;padding:12px;float:right;">My Maximum Loan Amount<br /><strong>$
                                 <div id="totalPrice" style="font-size:70px;color:#fff;text-align:center"></div></strong>
                             </span>
+
+                            <span class ="col-md-5" id="result-box" style="position: relative;width:300px;height:200px;background-color:#d5e1df;font-size:20px;padding:12px;float:right;">Monthly Payment<br /><strong>$
+                                <div id="monthlyPayment" style="font-size:70px;color:#fff;text-align:center"></div></strong>
+                            </span>
                             </div>
 
 
@@ -60,7 +64,7 @@
                             <div class="form-group">
                                 <label class="col-md-1 control-label" for="ageinput">Age</label>
                                 <div class="col-md-1">
-                                    <input id="ageinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
+                                    <input id="ageinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateMaxLoan()">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -76,7 +80,7 @@
                             <div class="form-group" >
                                 <label class="col-md-2 control-label" for="salaryinput">Monthly Salary</label>
                                 <div class="col-md-4">
-                                    <input id="salaryinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
+                                    <input id="salaryinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateMaxLoan()">
 
                                 </div>
                             </div>
@@ -86,7 +90,7 @@
                             <div class="form-group" >
                                 <label class="col-md-2 control-label" for="savingsinput">Personal Savings</label>
                                 <div class="col-md-4">
-                                    <input id="savingsinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
+                                    <input id="savingsinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateMaxLoan()">
 
                                 </div>
                             </div>
@@ -94,7 +98,7 @@
                             <div class="form-group" >
                                 <label class="col-md-2 control-label" for="cpfinput">CPF Savings in Ordinary Account</label>
                                 <div class="col-md-4"  style="margin-bottom:25px!important;">
-                                    <input id="cpfinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
+                                    <input id="cpfinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateMaxLoan()">
 
                                 </div>
                             </div>
@@ -112,7 +116,7 @@
                             <div class="form-group" >
                                 <label class="col-md-2 control-label" for="debtinput">Monthly Debt i.e. Credit Cards, Loans</label>
                                 <div class="col-md-4">
-                                    <input id="debtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
+                                    <input id="debtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateMaxLoan()">
 
                                 </div>
                             </div>
@@ -121,7 +125,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-5">
-                                    <select class="form-control" id="user-factor" name='userfactor' onchange="calculateTotal()">
+                                    <select class="form-control" id="user-factor" name='userfactor' onchange="calculateMonthlyPayment();">
                                         <option value="public">Public HDB</option>
                                         <option value="private">Private</option>
                                     </select>
@@ -230,24 +234,24 @@ factor_options["public"]=400000;
 factor_options["private"]=90000000;
 
 function getHousingPrice() {
-    var user_input= 0;
-	var selectedFactorOption = document.getElementsByName('selectedcake');
+    var factorSelect = document.getElementById('user-factor');
 
-	for (i=0; i < selectedFactorOption.length; i++) {
-		if (selectedFactorOption[i].checked) {
-			user_input = selectedFactorOption[i].value;
-		}
-	}
+    //alert(factor_options[factorSelect.value]);
 
-	return loan_prices[user_input];
+    return factor_options[factorSelect.value];
 }
 
 function getLoanYear() {
-	var factorSelect = document.getElementById('user-factor');
+    var user_input= 0;
+    var selectedFactorOption = document.getElementsByName('selectedcake');
 
-	//alert(factor_options[factorSelect.value]);
+    for (i=0; i < selectedFactorOption.length; i++) {
+        if (selectedFactorOption[i].checked) {
+            user_input = selectedFactorOption[i].value;
+        }
+    }
 
-	return factor_options[factorSelect.value];
+    return loan_prices[user_input];
 }
 
 function getAge() {
@@ -310,7 +314,6 @@ function getDebt() {
 
 
 
-
 function calculateTotal() {
     var total =0;
 	total = Math.abs(getHousingPrice() -((getSalary() - getDebt())*getLoanYear()*12 + getSavings() + getCPF() + getGrant())) ;
@@ -324,6 +327,123 @@ function hideTotal() {
 	var totalEl = document.getElementById('totalPrice');
 	totalEl.style.display = 'none';
 }
+
+function calculateMonthlyPayment() {
+    // Assume that payments are made at the end of the period (month)
+    var amount = getHousingPrice();
+    var interest_rate = 1.7*0.01/12;
+    var months = getLoanYear() * 12;
+
+    var pvif = Math.pow(1+interest_rate, months);
+    var payment = interest_rate * amount * pvif/(1 - pvif);
+
+    var monthlyPayment = -1*payment.toFixed(2);
+    document.getElementById('monthlyPayment').innerHTML = monthlyPayment;
+    totalEl.style.display = 'block';
+    return monthlyPayment;
+}
+
+
+function checkEligibity() {
+    var eligibity = true;
+    // Check Eligibity
+
+    // Rule 1: Net Income/ Debt < DSR
+    var dsr = 1;
+    var monthlyWage = getSalary().toFixed(2);
+
+    if (monthlyWage <= 3000){
+        dsr = 0.6;
+    } else if (monthlyWage <= 6000){
+        dsr = 0.7;
+    } else if (monthlyWage <= 10000){
+        dsr = 0.75;
+    } else {
+        dsr = 0.8;
+    }
+
+    var annualIncome = getSalary()*12 + getSavings()/getLoanYear();
+    var annualDebt = calculateMonthlyPayment()*12 + getDebt()*12;
+
+    if (annualIncome/annualDebt < dsr){
+        eligibity = false; // Throw DSR exceeded
+    }
+
+    // Rule 2: Mortgage Servicing Ratio (MSR) < 30%
+    if (calculateMonthlyPayment() > 0.3*(getSalary() + getSavings()/getLoanYear())){
+        eligibity = false;  // Throw MSR exceeded
+    }
+
+}
+
+function calculateMaxLoan() {
+    // Need to factor in LTV
+    var ltv = 1;
+    var numProperties = 0; // Need to create numProperties
+
+    var propertyType = document.getElementById('user-factor').value;
+
+    // Buying HDB
+    if (propertyType == "public"){
+        // If no outstanding house loan
+        if (numProperties == 0) {
+            // If loan tenure < 25 AND sum of loan tenure and age <= 65
+            if (getLoanYear() <= 25 && ((getLoanYear() + getAge()) <= 65)){
+                ltv = 0.75;
+            } else if (getLoanYear() > 25 || ((getLoanYear() + getAge()) > 65)){
+                ltv = 0.55;
+            }
+        } else if (numProperties == 1){ // 1 existing house loan
+            if (getLoanYear() <= 25 && ((getLoanYear() + getAge()) <= 65)){
+                ltv = 0.45;
+            } else if (getLoanYear() > 25 || ((getLoanYear() + getAge()) > 65)){
+                ltv = 0.25;
+            }
+        } else if (numProperties == 2){ // 2 existing house loan
+            if (getLoanYear() <= 25 && ((getLoanYear() + getAge()) <= 65)){
+                ltv = 0.35;
+            } else if (getLoanYear() > 25 || ((getLoanYear() + getAge()) > 65)){
+                ltv = 0.15;
+            }
+        }
+    } else { // Buying Private Property
+        if (numProperties == 0) {
+            // If loan tenure < 30 AND sum of loan tenure and age <= 65
+            if (getLoanYear() <= 30 && ((getLoanYear() + getAge()) <= 65)){
+                ltv = 0.75;
+            } else if (getLoanYear() > 30 || ((getLoanYear() + getAge()) > 65)){
+                ltv = 0.55;
+            }
+        } else if (numProperties == 1){ // 1 existing house loan
+            if (getLoanYear() <= 30 && ((getLoanYear() + getAge()) <= 65)){
+                ltv = 0.45;
+            } else if (getLoanYear() > 30 || ((getLoanYear() + getAge()) > 65)){
+                ltv = 0.25;
+            }
+        } else if (numProperties == 2){ // 2 existing house loan
+            if (getLoanYear() <= 30 && ((getLoanYear() + getAge()) <= 65)){
+                ltv = 0.35;
+            } else if (getLoanYear() > 30 || ((getLoanYear() + getAge()) > 65)){
+                ltv = 0.15;
+            }
+        }
+    }
+
+    var maxLoan = getHousingPrice() * ltv;
+    if (getAge() < 21){
+        maxLoan = 0;
+    }
+
+    document.getElementById('totalPrice').innerHTML = maxLoan;
+    totalEl.style.display = 'block';
+}
+
+function tabulateAmt() {
+    calculateMonthlyPayment();
+    calculateMaxLoan();
+}
+
+
   </script>
 </body>
 </html>
