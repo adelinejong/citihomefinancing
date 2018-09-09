@@ -1,0 +1,105 @@
+
+<div class="row">
+    <form action="" id="eligibilityform" onsubmit="return false" class="form-horizontal">
+        <div>
+            <div class="cont_order mx-auto" style="margin-bottom:10px;">
+                <fieldset>
+                    <div class="row col-md-12">
+                    <span class="col-md-7">
+                    <legend>Desired Loan Tenure</legend>
+                    
+                    <br />
+                    <div class="col-md-12">
+                        
+                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="5year" onclick="calculateTotal()" />   5 Years Loan</label>
+                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="5year" onclick="calculateTotal()" />  10 Years Loan</label>
+                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="15year" onclick="calculateTotal()" />  15 Years Loan</label>
+                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="20year" onclick="calculateTotal()" />  20 Years Loan</label><br/>
+                        
+                    </div>
+                    <div class="col-md-12">
+                        
+                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="25year" onclick="calculateTotal()" />   25 Years Loan</label>
+                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="30year" onclick="calculateTotal()" />  30 Years Loan</label>
+                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="35year" onclick="calculateTotal()" />  35 Years Loan</label>
+
+                    </div>
+                    <div style="margin:20px;">
+                        
+                        <a href="#"><button class="btn btn-primary active" style="border-radius:5px;">
+                            <i class="fa fa-user" aria-hidden="true"></i><br />Single Applicant</button></a>
+                        <button class="btn btn-secondary rv_button" style="border-radius:5px;">
+                            <i class="fa fa-users" aria-hidden="true"></i><br />Joint Applicants</button>
+                    </div>
+
+                    </span>
+
+                    <span class ="col-md-5" id="result-box" style="position: relative;width:300px;height:200px;background-color:#d8d3d3;font-size:20px;padding:12px;float:right;">My Maximum Loan Amount<br /><strong>$
+                        <div id="totalPrice" style="font-size: 70px;color: rgb(255, 255, 255);text-align: center;display: block;margin-top: 30px;"></div></strong>
+                    </span>
+                    </div>
+
+                    <div class="row col-md-12">
+                        <legend>Personal Details</legend>
+                        <div class="col-md-4">
+                            <label class="col-md-12 control-label" for="ageinput">Age</label>
+                            <input id="ageinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-md-12 control-label" for="residentinput">Residency</label>
+                            <select id="residentinput" name="selectbasic" class="form-control" onchange="calculateTotal()">
+                                <option value="singaporean">Singaporean/PR</option>
+                                <option value="foreigner">Foreigner</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-md-12 control-label" for="salaryinput">Monthly Salary</label>
+                            <input id="salaryinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
+                        </div>
+
+                    </div>
+                    <br />
+                        
+                    <div class="row col-md-12">
+                        
+                        <legend>Financial Commitment</legend>
+                        
+                        <div class="row col-md-12">
+                            
+                            <div class="col-md-4">
+                                <label class="col-md-12 control-label" for="savingsinput">Personal Savings</label>
+                                <input id="savingsinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="col-md-12 control-label" for="cpfinput">CPF Savings in Ordinary Account</label>
+                                <input id="cpfinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="col-md-12 control-label" for="debtinput">Monthly Debt i.e. Credit Cards, Loans</label>
+                                <input id="debtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()">
+                            </div>
+                        </div>
+                        <div class="row col-md-12">
+                            
+                            <div class="col-md-6">
+                                <label class="col-md-12 control-label" for="grantinput">Housing Grant<br>
+                                    <small><a href="https://services2.hdb.gov.sg/webapp/BP13EligCheck/BP13SHome?strSystem=CHECK">Redirect to apply HDB Housing Loan</a></small>
+                                </label>
+                                <input id="grantinput" name="textinput" type="text" placeholder="" class="form-control input-md" onchange="calculateTotal()"></div><div class="col-md-6">
+                                <div style="margin-top: 50px;">
+                                    <select class="form-control" id="user-factor" name="userfactor" onchange="calculateTotal()">
+                                        <option value="public">Public HDB</option>
+                                        <option value="private">Private</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </form>
+</div>
