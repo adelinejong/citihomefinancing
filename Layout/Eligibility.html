@@ -79,7 +79,7 @@
                                 <div id="totalPrice" style="font-size:70px;color:#fff;text-align:center"></div></strong>
                             </span>
 
-                            <span class ="col-md-12" style="position: relative;width:300px;height:200px;background-color:#d5e1df;font-size:20px;padding:12px;float:right;">Monthly Payment<br /><strong>$
+                            <span class ="col-md-12" style="position: relative;width:300px;height:200px;background-color:#696969;font-size:20px;padding:12px;float:right;">Monthly Payment<br /><strong>$
                                 <div id="monthlyPayment" style="font-size:70px;color:#fff;text-align:center"></div></strong>
                             </span>
 
@@ -99,10 +99,11 @@
                             <div class="form-group" >
                                 <label class="col-md-2 control-label" for="salaryinput">Monthly Salary</label>
                                 <div class="col-md-4">
-                                    <input id="salaryinput" name="textinput" type="text" value="0.00" class="form-control input-md" onclick="recalculateAmt()">
+                                    <input id="salaryinput" name="textinput" type="text" v-on:input="change" value="0.00" class="form-control input-md" onclick="recalculateAmt()">
 
                                 </div>
                             </div>
+
 
                             <br />
                             <legend>Financial Commitment</legend>
@@ -127,7 +128,7 @@
                                     <small><a href="https://www.hdb.gov.sg/cs/infoweb/residential/buying-a-flat/new/cpf-housing-grants-for-hdb-flats">Info on Housing grant</a></small>
                                 </label>
                                 <div class="col-md-4">
-                                    <input id="grantinput" name="textinput" type="text" placeholder="" class="form-control input-md" onclick="recalculateAmt()">
+                                    <input id="grantinput" name="textinput" type="text" value="0.00"  class="form-control input-md" onclick="recalculateAmt()">
 
                                 </div>
                             </div>
@@ -139,7 +140,8 @@
 
                                 </div>
                             </div>
-                            </div>
+                        </div>
+
 
 
                         </fieldset>
@@ -155,8 +157,6 @@
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
             <h2 class="text-center text-primary" id="eligibilityStatusBelow" style="text-transform: uppercase;" > </h2>
-            <h2 class="text-center text-primary" id="propertyValueBelow">Max Affordable Property ($)</h2>
-            <h2 class="text-center text-primary" id="loanValueBelow">Max Loan Amount ($)</h2>
             <hr>
             <div class="media wow fadeInRight">
                 <div class="media-body media-middle">
@@ -180,16 +180,15 @@
             </div>
             <hr>
             <div class="media wow fadeInRight">
-                <h3 id="msrValue">Mortgage Servicing Ratio (MSR)</h3>
-                <div class="media-body media-middle">
-                    <p>Expected Value</p>
-                </div>
+                <h3 id="msrValue">Monthly Payment Limit</h3>
+
                 <div class="media-right">
                     <i style="color:#fff" class="fas fa-home fa-7x"></i>
                 </div>
             </div>
             <hr>
-            <h2 class="text-center text-primary" id="totalValueBelow">Total ($) </h2>
+            <h2 class="text-center text-primary" id="loanValueBelow">Max Loan Amount ($) </h2>
+            <h2 class="text-center text-primary" id="totalValueBelow">Max Affordable Property ($) </h2>
             <hr>
         </div>
     </div>
@@ -266,20 +265,19 @@ function getAge() {
 	return parseInt(document.getElementById('ageinput').value);
 }
 
-function getResidency() {
-	return document.getElementById('residentinput').value;
+function getMSR() {
+	return parseFloat(getSalary()*0.3);
 }
-
 
 function getSalary() {
 	salary = parseFloat(document.getElementById('salaryinput').value);
-	console.log("in salary"+ salary);
+
 	return salary;
 }
 
 function getSavings() {
 	savings = parseFloat(document.getElementById('savingsinput').value);
-	console.log("in savings"+ savings);
+
 	return savings;
 }
 
@@ -358,7 +356,7 @@ function calculateMonthlyPayment() {
 
 function getDSR() {
     // Rule 1: Net Income/ Debt < DSR
-    var dsr = 1;
+    var dsr = 0.6;
     var monthlyWage = parseFloat(getSalary()).toFixed(2);
 
     if (monthlyWage <= 3000){
@@ -370,6 +368,8 @@ function getDSR() {
     } else {
         dsr = 0.8;
     }
+    var belowDSR = document.getElementById('dsrValue');
+    belowDSR.innerHTML = "Total Debt Servicing Ratio (%) <h1><strong>" + dsr + "</strong></h1>";
     return dsr;
 }
 
@@ -405,20 +405,19 @@ function getGrossIncome(){
     return (getSalary() + getSavings()/getLoanYear());
 }
 
-function checkEligibity() {
-    var eligibity = true;
-    // Check Eligibity
+function checkEligibility() {
+    var eligibility = false;
+    // Check eligibility
     // Rule 1: Net Income/ Debt < DSR
 
     if (getNetDebtOverNetIncome() < getDSR()){
-        eligibity = false; // Throw DSR exceeded
+        eligibility = true; // Throw DSR exceeded
     }
 
     // Rule 2: Mortgage Servicing Ratio (MSR) < 30%
-    if (calculateMonthlyPayment() > 0.3*(getGrossIncome())){
-        eligibity = false;  // Throw MSR exceeded
+    if (calculateMonthlyPayment() < 0.3*(getGrossIncome())){
+        eligibility = true;  // Throw MSR exceeded
     }
-
    console.log("netdebt/income: " + getNetDebtOverNetIncome());
    console.log("dsr: " + getDSR());
    console.log("monthly payment: " + calculateMonthlyPayment());
@@ -427,7 +426,7 @@ function checkEligibity() {
     var eligibilityStatus = document.getElementById('eligibilityStatusBelow');
     var eligibilityTop = document.getElementById('eligibilityStatus');
 
-    if(eligibity){
+    if(eligibility){
         eligibilityStatus.innerHTML = "<h2 style='text-transform: uppercase;color:#34a853' ><strong><i class='fas fa-check'></i> Eligible to Purchase</strong></h2>"
         eligibilityTop.innerHTML = "<div style='font-size:30px;color:#34a853;text-align:center'><i class='fas fa-check'></i> Eligible</div>"
 
@@ -441,7 +440,7 @@ function checkEligibity() {
 }
 
 function getLTV(){
-    var ltv = 1;
+    var ltv = 0.75;
     var numProperties = 0; // Need to create numProperties
 
     numProperties = document.getElementById('property-count').value;
@@ -493,10 +492,11 @@ function getLTV(){
             }
         }
     }
-    console.log("numYear = " + getLoanYear());
-    console.log("property type = " + propertyType)
-    console.log("age = " + getAge())
-    console.log("ltv = " + ltv)
+
+
+    var belowLTV = document.getElementById('ltvValue');
+    belowLTV.innerHTML = "Loan To Value (%) <h1><strong>" + ltv + "</strong></h1>";
+
     return ltv;
 }
 
@@ -512,8 +512,10 @@ function calculateMaxLoan() {
     var totalEl = document.getElementById('totalPrice');
     var belowLoanEl = document.getElementById('loanValueBelow');
     totalEl.innerHTML = Math.round(maxLoan).toLocaleString();
-    belowLoanEl.innerHTML = Math.round(maxLoan).toLocaleString();
+    belowLoanEl.innerHTML = "Max Loan Amount ($) <strong>" +  Math.round(maxLoan).toLocaleString() +"</strong>";
     totalEl.style.display = 'block';
+
+    return Math.round(maxLoan);
 }
 
 function recalculateAmt() {
@@ -521,8 +523,19 @@ function recalculateAmt() {
     calculateMaxLoan();
 
     // results breakdown section
-    checkEligibity();
+    checkEligibility();
+    getLTV();
+    getDSR();
     getMaxCPFWithdrawal();
+
+    console.log("recalculate "+ getMaxCPFWithdrawal() + getSavings() + calculateMaxLoan());
+    var total = parseFloat(getMaxCPFWithdrawal() + getSavings() + calculateMaxLoan());
+
+    document.getElementById('savingsValue').innerHTML = "Housing Grant($) <h1><strong>"+ savings + "</strong></h1>";
+    document.getElementById('grantValue').innerHTML = "Housing Grant($) <h1><strong>"+ document.getElementById('grantinput').value + "</strong></h1>";
+    document.getElementById('msrValue').innerHTML = "Monthly Payment Limit <h1><strong>"+ getMSR() + "</strong></h1>";
+
+    document.getElementById('totalValueBelow').innerHTML = "Max Affordable Property ($) <strong>"+ total.toLocaleString(); + "</strong>";
 
 }
 
