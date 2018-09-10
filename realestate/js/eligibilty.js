@@ -131,7 +131,7 @@ function getDSR() {
         dsr = 0.8;
     }
     var belowDSR = document.getElementById('dsrValue');
-    belowDSR.innerHTML = "Total Debt Servicing Ratio (%) <h1><strong>" + dsr + "</strong></h1>";
+    belowDSR.innerHTML = "Total Debt Servicing Ratio (%) <h1><strong>" + dsr + "</strong></h1><small style='color:#007bff'>*Net Debt/ Net Income should be lower than TSDR</small><br />";
     return dsr;
 }
 
@@ -205,7 +205,12 @@ function getNetDebtOverNetIncome(){
     var annualIncome = getSalary()*12 + getSavings()/getLoanYear();
     var annualDebt = calculateMonthlyPayment()*12 + getDebt()*12;
 
-    return annualDebt/annualIncome;
+    var annualDebtOverIncome = "-";
+    
+    if (annualIncome !== 0){
+        annualDebtOverIncome = parseFloat(annualDebt/annualIncome).toFixed(2); 
+    }
+    return annualDebtOverIncome;
 }
 
 function getGrossIncome(){
@@ -298,7 +303,7 @@ function getLTV(){
 
 
     var belowLTV = document.getElementById('ltvValue');
-    belowLTV.innerHTML = "Loan To Value (%) <h1><strong>" + ltv + "</strong></h1>";
+    belowLTV.innerHTML = "Net Debt/ Net Income <h1><strong>" + getNetDebtOverNetIncome() + "</strong></h1>";
 
     return ltv;
 }
@@ -315,7 +320,7 @@ function calculateMaxLoan() {
     var totalEl = document.getElementById('totalPrice');
     var belowLoanEl = document.getElementById('loanValueBelow');
     totalEl.innerHTML = Math.round(maxLoan).toLocaleString();
-    belowLoanEl.innerHTML = "Total Funds Available ($) <strong>" +  Math.round(maxLoan).toLocaleString() +"</strong>";
+    belowLoanEl.innerHTML = "Max. Loan Amount ($) <strong>" +  Math.round(maxLoan).toLocaleString() +"</strong>";
     totalEl.style.display = 'block';
 
     return Math.round(maxLoan);
@@ -334,10 +339,11 @@ function recalculateAmt() {
     var total = parseFloat(getMaxCPFWithdrawal() + getSavings() + calculateMaxLoan());
 
     document.getElementById('savingsValue').innerHTML = "Available Savings ($) <h1><strong>"+ savings + "</strong></h1>";
-    document.getElementById('grantValue').innerHTML = "Housing Grant($) <h1><strong>"+ document.getElementById('grantinput').value + "</strong></h1>";
-    document.getElementById('msrValue').innerHTML = "Monthly Payment Limit <h1><strong>"+ getMSR() + "</strong></h1>";
-
+    document.getElementById('grantValue').innerHTML = "Housing Grant ($) <h1><strong>"+ document.getElementById('grantinput').value + "</strong></h1>";
+    document.getElementById('msrValue').innerHTML = "Monthly Payment Limit ($) <h1><strong>"+ getMSR() + "</strong></h1><small style='color:#007bff'>*Monthly Payment should be lower than Mortage Servicing Ratio (30%) x Gross Income</small>";
+    document.getElementById('actualMonthlyValue').innerHTML = "Actual Monthly Payment ($) <h1><strong>"+ calculateMonthlyPayment() + "</strong></h1>";
     document.getElementById('totalValueBelow').innerHTML = "Total Funds Available ($) <strong>"+ total.toLocaleString(); + "</strong>";
+    document.getElementById('ltvValue').innerHTML = "Net Debt/ Net Income ($) <h1><strong>" + getNetDebtOverNetIncome() + "</strong></h1>";
 
 }
 
@@ -350,21 +356,23 @@ $('a.page-scroll').bind('click', function(event) {
 });
 
 
-$(document).ready(function () {
-    $('#rangeText').text($('#loanyearrange').val());
+/*$(document).ready(function () {
 
     $('#loanyearrange').slider({
         formatter: function (value) {
             return 'Current value: ' + value;
         }
     });
-    $('#loanyearrange').on('input change', function () {
-        $('#rangeText').text($(this).val());
-    });
+    
+    
+    
+});*/
+
+function updateYear(){
+$('#loanyearrange').on('input change', function () {
+    $('#rangeText').text($(this).val());
 });
-
-
-
+}
 
 function toggleJointApp() {
     var x = document.getElementById("jointAppSection");
@@ -378,3 +386,4 @@ function toggleJointApp() {
         $("#single-btn").removeClass("btn-secondary").addClass('btn-primary');
     }
 }
+
