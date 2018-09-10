@@ -21,7 +21,7 @@ $(document).ready(function(){
 
         var areaRangeMin = $("#range2").data("ionRangeSlider").result.from;
         var areaRangeMax = $("#range2").data("ionRangeSlider").result.to;
-        
+        jQuery.support.cors = true;
         var request = $.ajax({
             url: 'https://www.iproperty.com.sg/sale/' + strLoc +"/"+ strProp,
             type: 'GET',
