@@ -19,22 +19,28 @@
                     <span class="col-md-7">    
                     <div>
                         <legend>Desired Loan Tenure in Years:  </legend>
-                        <input id="loanyearrange" style="width:500px;" type="range" min="5" max="35" step="5" value="25" name="range" onclick="recalculateAmt()" />
+                        <input id="loanyearrange" style="width:500px;" type="range" min="5" max="35" step="5" value="25" name="range" onChange="recalculateAmt()" />
                         <label id="rangeText" style="font-size: 20px;padding-left: 15px;" />
                     </div>
                     <div class="form-group" style="margin-top:25px;">
                         <label class="col-md-4 control-label">Property Type</label>
                         <div class="col-md-6">
-                            <select class="form-control" id="user-factor" name='userfactor' onclick="recalculateAmt()">
+                            <select class="form-control" id="user-factor" name='userfactor' onChange="recalculateAmt()">
                                 <option value="public">Public HDB</option>
                                 <option value="private">Private</option>
                             </select>
                         </div>
                     </div>
+                    <div class="form-group">    
+                       <label class="col-md-12 control-label" for="valueLimit">Valuation Limit</label>
+                        <div class="col-md-6">
+                            <input id="valueLimit" name="textinput" type="text" value="" class="form-control input-md" onChange="recalculateAmt()">
+                       </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Num Property Owned</label>
                         <div class="col-md-6">
-                            <select class="form-control" id="property-count" name='propertycount' onclick="recalculateAmt()">
+                            <select class="form-control" id="property-count" name='propertycount' onChange="recalculateAmt()">
                                 <option value="0">0</option>
                                 <option value="1">1</option>
                             </select>
@@ -64,11 +70,11 @@
                         <legend>Personal Details</legend>
                         <div class="col-md-6">
                             <label class="col-md-12 control-label" for="ageinput">Age</label>
-                            <input id="ageinput" name="textinput" type="text" placeholder="" class="form-control input-md" onclick="recalculateAmt()">
+                            <input id="ageinput" name="textinput" type="text" placeholder="" class="form-control input-md" onChange="recalculateAmt()">
                         </div>
                         <div class="col-md-6">
                             <label class="col-md-12 control-label" for="salaryinput">Monthly Salary</label>
-                            <input id="salaryinput" name="textinput" type="text" value="0.00" class="form-control input-md" onclick="recalculateAmt()">
+                            <input id="salaryinput" name="textinput" type="text" value="0.00" class="form-control input-md" onChange="recalculateAmt()">
                         </div>
 
                     </div>
@@ -81,57 +87,59 @@
                             
                             <div class="col-md-6">
                                 <label class="col-md-12 control-label" for="savingsinput">Personal Savings</label>
-                                <input id="savingsinput" name="textinput" type="text" value="0.00" class="form-control input-md" onclick="recalculateAmt()">
+                                <input id="savingsinput" name="textinput" type="text" value="0.00" class="form-control input-md" onChange="recalculateAmt()">
                             </div>
 
                             <div class="col-md-6">
                                 <label class="col-md-12 control-label" for="cpfinput">CPF Savings in Ordinary Acc</label>
-                                <input id="cpfinput" name="textinput" type="text" value="0.00" class="form-control input-md" onclick="recalculateAmt()">
+                                <input id="cpfinput" name="textinput" type="text" value="0.00" class="form-control input-md" onChange="recalculateAmt()">
                             </div>
 
                         </div>
                         <div class="row col-md-12" style"margin-top:10px;">
                             <div class="col-md-6">
                                 <label class="col-md-12 control-label" for="debtinput">Monthly Debt i.e Car Loans</label>
-                                <input id="debtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onclick="recalculateAmt()">
+                                <input id="debtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onChange="recalculateAmt()">
                             </div>
                             <div class="col-md-6">
                                 <label class="col-md-12 control-label" for="grantinput">Housing Grant  
                                     <small><a href="https://www.hdb.gov.sg/cs/infoweb/residential/buying-a-flat/new/cpf-housing-grants-for-hdb-flats"><span class="icon"><i class="fa fa-info-circle" aria-hidden="true"></i></span> More info</a></small>
                                 </label>
-                                <input id="grantinput" name="textinput" type="text" value="0.00" class="form-control input-md" onclick="recalculateAmt()"></div><div class="col-md-6">
+                                <input id="grantinput" name="textinput" type="text" value="0.00" class="form-control input-md" onChange="recalculateAmt()"></div><div class="col-md-6">
                                 
                             </div>
                         </div>
+                        <div class="col-md-7" style="text-algin:center;"><button class="btn btn-primary btn-xl" style="margin-top:50px;" onClick="recalculateAmt()">Calculate!</button></div>
+                                    
                     </div>
                     </span>
                     
-                    <span class="col-md-5" id="jointAppSection" style="display:none;">
+                    <span class="col-md-5" id="jointAppSection" style="display:none;border: 1px solid rgba(0, 0, 0, 0.15);padding:15px;">
                         <div class="row col-md-12">
                             <legend>Joint Applicant Details</legend>
                             <div class="col-md-10" >
                                 <label class="col-md-12 control-label" for="jointageinput">Age</label>
-                                <input id="jointageinput" name="textinput" type="text" class="form-control input-md" onclick="recalculateAmt()">
+                                <input id="jointageinput" name="textinput" type="text" class="form-control input-md" onChange="recalculateAmt()">
                             </div>
                             <div class="col-md-10" >
                                 <label class="col-md-12 control-label" for="jointsalaryinput">Monthly Salary</label>
-                                <input id="jointsalaryinput" name="textinput" type="text" value="0.00" class="form-control input-md" onclick="recalculateAmt()">
+                                <input id="jointsalaryinput" name="textinput" type="text" value="0.00" class="form-control input-md" onChange="recalculateAmt()">
                             </div>
                             <div class="col-md-10">
                                 <label class="col-md-12 control-label" for="jointsavingsinput">Personal Savings</label>
-                                <input id="jointsavingsinput" name="textinput" type="text" value="0.00" class="form-control input-md" onclick="recalculateAmt()">
+                                <input id="jointsavingsinput" name="textinput" type="text" value="0.00" class="form-control input-md" onChange="recalculateAmt()">
                             </div>
                             <div class="col-md-10">
                                 <label class="col-md-12 control-label" for="jointcpfinput">CPF Savings in Ordinary Acc</label>
-                                <input id="jointcpfinput" name="textinput" type="text" value="0.00" class="form-control input-md" onclick="recalculateAmt()">
+                                <input id="jointcpfinput" name="textinput" type="text" value="0.00" class="form-control input-md" onChange="recalculateAmt()">
                             </div>
                             <div class="col-md-10">
                                 <label class="col-md-12 control-label" for="debtinput">Monthly Debt i.e Car Loans</label>
-                                <input id="jointdebtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onclick="recalculateAmt()">
+                                <input id="jointdebtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onChange="recalculateAmt()">
                             </div>
                             <div class="col-md-10">
                                 <label class="col-md-12 control-label" for="jointgrantinput">Housing Grant</label>
-                                <input id="jointgrantinput" name="textinput" type="text" value="0.00" class="form-control input-md" onclick="recalculateAmt()"></div><div class="col-md-6">
+                                <input id="jointgrantinput" name="textinput" type="text" value="0.00" class="form-control input-md" onChange="recalculateAmt()"></div><div class="col-md-6">
                            </div>
                         </div>
                         
@@ -150,21 +158,25 @@
                     <h2 class="text-center text-primary" id="eligibilityStatusBelow" style="text-transform: uppercase;" > </h2>
                     <div class="card-body">
                         <span style="float:right;"><i style="color:#fff" class="fa fa-bank fa-5x"></i></span>
+                        <h3 style="margin-bottom:8px;">Eligibility</h3>
                         <p id="ltvValue">Loan To Value (LTV in %)</p>
                         <p id="dsrValue">Total Debt Servicing Ratio (TDSR in %)</p>
+                        <p id="msrValue">Monthly Payment Limit</p>
+                        
                         <hr>
                         <span style="float:right;"><i style="color:#fff" class="fa fa-money fa-5x"></i></span>
-                        <h3 id="maxcpf">Max CPF Withdrawal ($) </h3>
+                        <h3 style="margin-bottom:8px;">Affordability</h3>
+                        <p id="maxcpf">Max CPF Withdrawal ($) </p>
                         <p id="savingsValue">Available Savings ($) </p>
                         <p id="grantValue">Housing Grant($) </p>
+                       
                         <hr>
-                        <span style="float:right;"><i style="color:#fff" class="fa fa-home fa-5x"></i></span>
-                        <h3 id="msrValue">Monthly Payment Limit</h3>
+
+
                         
                     </div>
-                    <hr>
                     <h3 class="text-center text-primary" id="loanValueBelow">Max Loan Amount ($) </h3>
-                    <h3 class="text-center text-primary" id="totalValueBelow">Max Affordable Property ($) </h3>
+                    <h3 class="text-center text-primary" id="totalValueBelow">Total Funds Available ($) </h3>
                     
                 </div>
             </div>

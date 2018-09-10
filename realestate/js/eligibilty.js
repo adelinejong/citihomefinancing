@@ -10,14 +10,19 @@ loan_prices["35year"]=35;
 
 var factor_options = new Array();
 factor_options["public"]=400000;
-factor_options["private"]=90000000;
+factor_options["private"]=9000000;
 
 function getHousingPrice() {
-    var factorSelect = document.getElementById('user-factor');
-
+    var factorSelect;
+    var limit = document.getElementById('valueLimit').value;
+    if(limit !== null && limit !== ''){
+        factorSelect = limit;
+    }else{
+        factorSelect = factor_options[document.getElementById('user-factor').value];
+    }
     //alert(factor_options[factorSelect.value]);
 
-    return factor_options[factorSelect.value];
+    return factorSelect;
 }
 
 function getLoanYear() {
@@ -131,8 +136,7 @@ function getDSR() {
 }
 
 function getMaxCPFWithdrawal(){
-    var reduceValuationIndex = 0.8; //20% lower than org
-    var valuationLimit = getHousingPrice() * reduceValuationIndex;
+    var valuationLimit = getHousingPrice();
     var withdrawlLimit = valuationLimit*1.2;
 
     // Main User
@@ -311,7 +315,7 @@ function calculateMaxLoan() {
     var totalEl = document.getElementById('totalPrice');
     var belowLoanEl = document.getElementById('loanValueBelow');
     totalEl.innerHTML = Math.round(maxLoan).toLocaleString();
-    belowLoanEl.innerHTML = "Max Loan Amount ($) <strong>" +  Math.round(maxLoan).toLocaleString() +"</strong>";
+    belowLoanEl.innerHTML = "Total Funds Available ($) <strong>" +  Math.round(maxLoan).toLocaleString() +"</strong>";
     totalEl.style.display = 'block';
 
     return Math.round(maxLoan);
@@ -329,11 +333,11 @@ function recalculateAmt() {
 
     var total = parseFloat(getMaxCPFWithdrawal() + getSavings() + calculateMaxLoan());
 
-    document.getElementById('savingsValue').innerHTML = "Housing Grant($) <h1><strong>"+ savings + "</strong></h1>";
+    document.getElementById('savingsValue').innerHTML = "Available Savings ($) <h1><strong>"+ savings + "</strong></h1>";
     document.getElementById('grantValue').innerHTML = "Housing Grant($) <h1><strong>"+ document.getElementById('grantinput').value + "</strong></h1>";
     document.getElementById('msrValue').innerHTML = "Monthly Payment Limit <h1><strong>"+ getMSR() + "</strong></h1>";
 
-    document.getElementById('totalValueBelow').innerHTML = "Max Affordable Property ($) <strong>"+ total.toLocaleString(); + "</strong>";
+    document.getElementById('totalValueBelow').innerHTML = "Total Funds Available ($) <strong>"+ total.toLocaleString(); + "</strong>";
 
 }
 
@@ -347,6 +351,8 @@ $('a.page-scroll').bind('click', function(event) {
 
 
 $(document).ready(function () {
+    $('#rangeText').text($('#loanyearrange').val());
+
     $('#loanyearrange').slider({
         formatter: function (value) {
             return 'Current value: ' + value;
@@ -356,6 +362,8 @@ $(document).ready(function () {
         $('#rangeText').text($(this).val());
     });
 });
+
+
 
 
 function toggleJointApp() {
