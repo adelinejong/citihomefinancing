@@ -19,8 +19,8 @@
                     <span class="col-md-7">    
                     <div>
                         <legend>Desired Loan Tenure in Years:  </legend>
-                        <input id="loanyearrange" style="width:500px;" type="range" min="5" max="35" step="5" value="25" name="range" onChange="recalculateAmt()" />
-                        <label id="rangeText" style="font-size: 20px;padding-left: 15px;" />
+                        <input id="loanyearrange" style="width:500px;" type="range" min="5" max="35" step="5" value="25" name="range" onChange="recalculateAmt();updateYear();" />
+                        <label id="rangeText" style="font-size: 20px;padding-left: 15px;">25</label>
                     </div>
                     <div class="form-group" style="margin-top:25px;">
                         <label class="col-md-4 control-label">Property Type</label>
@@ -43,6 +43,7 @@
                             <select class="form-control" id="property-count" name='propertycount' onChange="recalculateAmt()">
                                 <option value="0">0</option>
                                 <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -99,7 +100,7 @@
                         <div class="row col-md-12" style"margin-top:10px;">
                             <div class="col-md-6">
                                 <label class="col-md-12 control-label" for="debtinput">Monthly Debt i.e Car Loans</label>
-                                <input id="debtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onChange="recalculateAmt()">
+                                <input id="debtinput" name="textinput" type="text" value="0.00" class="form-control input-md" onChange="recalculateAmt()">
                             </div>
                             <div class="col-md-6">
                                 <label class="col-md-12 control-label" for="grantinput">Housing Grant  
@@ -134,8 +135,8 @@
                                 <input id="jointcpfinput" name="textinput" type="text" value="0.00" class="form-control input-md" onChange="recalculateAmt()">
                             </div>
                             <div class="col-md-10">
-                                <label class="col-md-12 control-label" for="debtinput">Monthly Debt i.e Car Loans</label>
-                                <input id="jointdebtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onChange="recalculateAmt()">
+                                <label class="col-md-12 control-label" for="jointdebtinput">Monthly Debt i.e Car Loans</label>
+                                <input id="jointdebtinput" name="textinput" type="text" value="0.00" class="form-control input-md" onChange="recalculateAmt()">
                             </div>
                             <div class="col-md-10">
                                 <label class="col-md-12 control-label" for="jointgrantinput">Housing Grant</label>
@@ -157,12 +158,11 @@
                 <div class="card mb-5 mb-lg-0" style="background-color:#d3d3d3;padding:30px;">
                     <h2 class="text-center text-primary" id="eligibilityStatusBelow" style="text-transform: uppercase;" > </h2>
                     <div class="card-body">
-                        <span style="float:right;"><i style="color:#fff" class="fa fa-bank fa-5x"></i></span>
                         <h3 style="margin-bottom:8px;">Eligibility</h3>
-                        <p id="ltvValue">Loan To Value (LTV in %)</p>
+                        <p id="ltvValue">Net Debt/ Net Income</p>
                         <p id="dsrValue">Total Debt Servicing Ratio (TDSR in %)</p>
+                        <p id="actualMonthlyValue">Actual Monthly Payment ($) </p>
                         <p id="msrValue">Monthly Payment Limit</p>
-                        
                         <hr>
                         <span style="float:right;"><i style="color:#fff" class="fa fa-money fa-5x"></i></span>
                         <h3 style="margin-bottom:8px;">Affordability</h3>
