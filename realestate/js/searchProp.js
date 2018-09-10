@@ -7,6 +7,8 @@
 $(document).ready(function(){
 //     https://www.iproperty.com.sg/sale/district-01/hdb/?bedroom=2&minPrice=100000&maxPrice=600000&minBuiltupSize=500&maxBuiltupSize=2000     
     $("#searchProp").click(function(){
+        $('#displayProp').html("");
+        document.getElementById("loadergif").style.display = "block";
         var locations = document.getElementById("location");
         var strLoc = locations.options[locations.selectedIndex].value;
 
@@ -21,21 +23,29 @@ $(document).ready(function(){
 
         var areaRangeMin = $("#range2").data("ionRangeSlider").result.from;
         var areaRangeMax = $("#range2").data("ionRangeSlider").result.to;
-        jQuery.support.cors = true;
+        $.support.cors = true;
         var request = $.ajax({
-            url: 'https://www.iproperty.com.sg/sale/' + strLoc +"/"+ strProp,
+            url: 'https://cors-anywhere.herokuapp.com/https://www.iproperty.com.sg/sale/' + strLoc +"/"+ strProp,
             type: 'GET',
+//            xhrFields: {
+//                withCredentials: true
+//            },
 //            crossDomain: true,
+//            headers: {
+//                'Content-Type': 'application/x-www-form-urlencoded'
+//            },
 //            headers: {  
 //                'Access-Control-Allow-Origin': ["https://www.iproperty.com.sg", "*"] },
             data: { bedroom: strBedroom, minPrice : priceRangeMin, maxPrice : priceRangeMax, minBuiltupSize : areaRangeMin, maxBuiltupSize : areaRangeMax}
         });
         
         request.done(function(data) {
+//            console.log(data);
 //            data = $(data).find('div.kLHllD');
 //            console.log($x("//div[contains(@class, 'cdffIT')]"));
 
             var doc = new DOMParser().parseFromString(data,'text/html');
+            console.log(doc);
 //            data = $(data[0]).find('div.cdffIT');
 //            data = $(data[0]).find('h2.dLCzlh'); 
             var nodesSnapshot = document.evaluate('//div[contains(@class, "dIdCFr")]', doc, null, XPathResult.ANY_TYPE, null );
@@ -52,44 +62,45 @@ $(document).ready(function(){
             var node, nodes = []
             while (node = nodesSnapshot.iterateNext())
               nodes.push(node);
-            console.log(nodes);
+//            console.log(nodes);
             
             var node2, nodes2 = []
 //            console.log(nodes2.length);
             while (node2 = nodesPropName.iterateNext())
                 nodes2.push(node2.textContent);
             
-            console.log(nodes2);
+//            console.log(nodes2);
             
             var node3, nodes3 = []
-            for(var ii = 0; ii<nodesPropPrice.length; ii+2){
-                console.log(nodesPropPrice[ii]);
-                nodes3.push(nodesPropPrice[ii].textContent);
-            }
-//            while (node3 = nodesPropPrice.iterateNext())
-//                nodes3.push(node3.textContent);
-//                nodesPropPrice.iterateNext();
+            while (node3 = nodesPropPrice.iterateNext())
+                if(nodes3.length !== 0){
+                    if(nodes3[nodes3.length-1] !== node3.textContent){
+                        nodes3.push(node3.textContent);
+                    }
+                }else{
+                    nodes3.push(node3.textContent);
+                }
             console.log(nodes3);
             
             var node4, nodes4 = []
             while (node4 = nodesPropAdd.iterateNext())
                 nodes4.push(node4.textContent);
-            console.log(nodes4);
+//            console.log(nodes4);
             
             var node5, nodes5 = []
             while (node5 = nodesPropAdd2.iterateNext())
                 nodes5.push(node5.textContent);
-            console.log(nodes5);
+//            console.log(nodes5);
             
             var node6, nodes6 = []
             while (node6 = nodesPropRoom.iterateNext())
                 nodes6.push(node6.textContent);
-            console.log(nodes6);
+//            console.log(nodes6);
             
             var node7, nodes7 = []
             while (node7 = nodesPropBulit.iterateNext())
                 nodes7.push(node7.textContent);
-            console.log(nodes7);
+//            console.log(nodes7);
             
             var firstrow = document.createElement("div");
             firstrow.className = "row";
@@ -104,14 +115,14 @@ $(document).ready(function(){
                 singleProp.className = "single-property";
                 secondEle.appendChild(singleProp);
 
-                var imgContent = document.createElement("div");
-                imgContent.className = "images";
-                singleProp.appendChild(imgContent);
-
-                var imgContentImg = document.createElement("img");
-                imgContentImg.className = "img-fluid mx-auto d-block";
-                imgContentImg.src = "img/property.png";
-                imgContent.appendChild(imgContentImg);
+//                var imgContent = document.createElement("div");
+//                imgContent.className = "images";
+//                singleProp.appendChild(imgContent);
+//
+//                var imgContentImg = document.createElement("img");
+//                imgContentImg.className = "img-fluid mx-auto d-block";
+//                imgContentImg.src = "img/property.png";
+//                imgContent.appendChild(imgContentImg);
 
                 var singleDesc = document.createElement("div");
                 singleDesc.className = "desc";
@@ -124,7 +135,7 @@ $(document).ready(function(){
                 var singleDescTitleText = document.createElement("h4");
                 var singleDescPriceText = document.createElement("h4");
 
-                singleDescTitleText.appendChild(document.createTextNode(nodes2[i]));
+                singleDescTitleText.appendChild(document.createTextNode(nodes4[i]));
                 singleDescPriceText.appendChild(document.createTextNode(nodes3[i]));
                 singleDescTitle.appendChild(singleDescTitleText);
                 singleDescTitle.appendChild(singleDescPriceText);
@@ -134,19 +145,42 @@ $(document).ready(function(){
                 singleDescMiddle.className = "middle";
                 var singleDescMiddleContent = document.createElement("div");
                 singleDescMiddleContent.className = "d-flex justify-content-start";
+                var singleDescMiddleContent2 = document.createElement("div");
+                singleDescMiddleContent2.className = "d-flex justify-content-start";
 
                 singleDesc.appendChild(singleDescMiddle);
                 singleDescMiddle.appendChild(singleDescMiddleContent);
+                singleDescMiddle.appendChild(singleDescMiddleContent2);
 
                 var singleDescContentText = document.createElement("p");
-                singleDescContentText.appendChild(document.createTextNode(nodes7[i]));
+                var singleDescContentText2 = document.createElement("p");
+                singleDescContentText.appendChild(document.createTextNode(nodes6[i]));
+                singleDescContentText2.appendChild(document.createTextNode(nodes7[i]));
                 singleDescMiddleContent.appendChild(singleDescContentText);
+                singleDescMiddleContent.appendChild(singleDescContentText2);
+                
+                var singleDescContentAdd = document.createElement("p");
+                var singleDescContentAdd2 = document.createElement("p");
+                singleDescContentAdd.appendChild(document.createTextNode(nodes5[i]));
+                singleDescContentAdd2.appendChild(document.createTextNode(nodes2[i]));
+                singleDescMiddleContent2.appendChild(singleDescContentAdd);
+                singleDescMiddleContent2.appendChild(singleDescContentAdd2);
                 
                 if(i === (nodes2.length-1)){
                     $('#displayProp').html(firstrow);
+                    document.getElementById("loadergif").style.display = "none";
+                    var node, nodes,node2, nodes2,node3, nodes3,node4, nodes4,node5, nodes5,node6, nodes6,node7, nodes7 = [];
                 }
             }
             
+            if(nodes2.length == 0){
+                var node, nodes,node2, nodes2,node3, nodes3,node4, nodes4,node5, nodes5,node6, nodes6,node7, nodes7 = [];
+                var displayNone = document.createElement("h4");
+                displayNone.className = "displayNoneProp";
+                displayNone.appendChild(document.createTextNode("No Property"));
+                $('#displayProp').html(displayNone);
+                document.getElementById("loadergif").style.display = "none";
+            }
 //            <link href="css/ipropertyvendor.css" rel="stylesheet" type="text/css"/>
 //            var cssLink = document.createElement("link");
 //            cssLink.href = "css/ipropertyvendor.css"; 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <script src="//squarefoot.com.sg/js/iframeresizer.min.js"></script>
+        <!-- Replace j93b541us62ngpax78dqefm0rzocythi in the following line with token issued for your domain -->
+        <!--<script src="//squarefoot.com.sg/component/sqftapi?token=te1z25cspaxqfbm93wv86glr4ioyud0n&task=js"></script>-->
+        <script src="//squarefoot.com.sg/component/sqftapi?token=0cqmhg351unr24s9bz6el8wij7yfpvtk&task=js"></script>
+        <script>
+            $(document).ready(function(){
+                squarefoot.load("sqftmain",{
+                    task: "project", name: "Optima @ Tanah Merah", type: "h", map: "1", nearby: "1,1,0,the tanamera,casa merah,east meadows,the glades,urban vista"
+                });
+                $("#sqftmain").iFrameResize();
+            });
+        </script>
+    </head>
+    <body>
+        <div>TODO write content</div>
+    </body>
+</html>
