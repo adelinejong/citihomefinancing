@@ -7,6 +7,7 @@
 $(document).ready(function(){
 //     https://www.iproperty.com.sg/sale/district-01/hdb/?bedroom=2&minPrice=100000&maxPrice=600000&minBuiltupSize=500&maxBuiltupSize=2000     
     $("#searchProp").click(function(){
+        $('#displayProp').html("");
         document.getElementById("loadergif").style.display = "block";
         var locations = document.getElementById("location");
         var strLoc = locations.options[locations.selectedIndex].value;
@@ -168,10 +169,12 @@ $(document).ready(function(){
                 if(i === (nodes2.length-1)){
                     $('#displayProp').html(firstrow);
                     document.getElementById("loadergif").style.display = "none";
+                    var node, nodes,node2, nodes2,node3, nodes3,node4, nodes4,node5, nodes5,node6, nodes6,node7, nodes7 = [];
                 }
             }
             
             if(nodes2.length == 0){
+                var node, nodes,node2, nodes2,node3, nodes3,node4, nodes4,node5, nodes5,node6, nodes6,node7, nodes7 = [];
                 var displayNone = document.createElement("h4");
                 displayNone.className = "displayNoneProp";
                 displayNone.appendChild(document.createTextNode("No Property"));

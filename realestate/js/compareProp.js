@@ -8,7 +8,7 @@ function compareFunction() {
     var propB = document.getElementById("PropertyBinput").value;
 //    console.log(propB);
     squarefoot.load("sqftmain",{
-        task: "project", name: propA, type: "r", map: "1", nearby: "1,1,0,"+propB
+        task: "project", name: propA, type: "h", map: "1", subtype: "mnopqrs", summary: "1",nearby: "1,1,0,"+propB
     });
     $("#sqftmain").iFrameResize();
 }
