@@ -22,19 +22,17 @@ function getHousingPrice() {
 
 function getLoanYear() {
     var user_input= 0;
-    var selectedFactorOption = document.getElementsByName('selectedcake');
-
-    for (i=0; i < selectedFactorOption.length; i++) {
-        if (selectedFactorOption[i].checked) {
-            user_input = selectedFactorOption[i].value;
-        }
-    }
-
-    return parseInt(loan_prices[user_input]);
+    var selectedFactorOption = document.getElementById('loanyearrange');
+    return parseInt(selectedFactorOption.value);
+    
 }
 
-function getAge() {
+function getMainUserAge() {
 	return parseInt(document.getElementById('ageinput').value);
+}
+
+function getJointUserAge() {
+    return parseInt(document.getElementById('jointageinput').value);
 }
 
 function getMSR() {
@@ -42,63 +40,48 @@ function getMSR() {
 }
 
 function getSalary() {
-	salary = parseFloat(document.getElementById('salaryinput').value);
+	mainSalary = parseFloat(document.getElementById('salaryinput').value);
+    jointSalary = parseFloat(document.getElementById('jointsalaryinput').value);
+    salary = mainSalary + jointSalary;
 
 	return salary;
 }
 
 function getSavings() {
-	savings = parseFloat(document.getElementById('savingsinput').value);
+	mainSavings = parseFloat(document.getElementById('savingsinput').value);
+    jointSavings = parseFloat(document.getElementById('jointsavingsinput').value);
+    savings = mainSavings + jointSavings;
 
 	return savings;
 }
 
-function getCPF() {
-    var cpf = document.getElementById('cpfinput').value;
-    var reduceValuationIndex = 0.8; //20% lower than org
-    if(getAge() > 55){
-        if(cpf > 16100 ){
-            cpfcap = reduceValuationIndex*1.2*getHousingPrice();
+function getMainCPF() {
+    var cpf = parseFloat(document.getElementById('cpfinput').value);
+    return cpf;
+}
 
-            if(cpfcap > cpf ){
-                return cpf;
-            }else{
-                return cpfcap;
-            }
-        }else{
-            return 0;
-        }
-    }else{
-        if(cpf > 17100){
-            cpfcap = reduceValuationIndex*1.2*getHousingPrice();
-
-            if(cpfcap > cpf ){
-                return cpf;
-            }else{
-                return cpfcap;
-            }
-
-        }else{
-            return 0;
-        }
-    }
-
-	return 0;
+function getJointUserCPF() {
+    var cpf = parseFloat(document.getElementById('jointcpfinput').value);
+    return cpf;
 }
 
 function getGrant() {
-	return document.getElementById('grantinput').value;
+    mainUserGrant = parseFloat(document.getElementById('grantinput').value);
+    jointUserGrant = parseFloat(document.getElementById('jointgrantinput').value);
+
+	return (mainUserGrant + jointUserGrant);
 }
 
 function getDebt() {
-	return document.getElementById('debtinput').value;
+    mainUserDebt = parseFloat(document.getElementById('debtinput').value);
+    jointUserDebt = parseFloat(document.getElementById('jointdebtinput').value);
+
+	return (mainUserDebt + jointUserDebt);
 }
-
-
 
 function calculateTotal() {
     var total =0;
-	total = Math.abs(getHousingPrice() -((getSalary() - getDebt())*getLoanYear()*12 + getSavings() + getCPF() + getGrant())) ;
+	total = Math.abs(getHousingPrice() -((getSalary() - getDebt())*getLoanYear()*12 + getSavings() + getMainCPF() + getGrant())) ;
 	var totalEl = document.getElementById('totalPrice');
 
 	document.getElementById('totalPrice').innerHTML = total;
@@ -115,12 +98,14 @@ function calculateMonthlyPayment() {
     var amount = getHousingPrice();
     var interest_rate = 1.7*0.01/12;
     var months = getLoanYear() * 12;
-
+    
     var pvif = Math.pow(1+interest_rate, months);
     var payment = interest_rate * amount * pvif/(1 - pvif);
-
+    
+    
     var monthlyPayment = parseFloat(-1*payment).toFixed(2);
     var totalPaymentEl = document.getElementById('monthlyPayment');
+    
     totalPaymentEl.innerHTML = monthlyPayment;
     totalPaymentEl.style.display = 'block';
     return monthlyPayment;
@@ -146,24 +131,70 @@ function getDSR() {
 }
 
 function getMaxCPFWithdrawal(){
+    var reduceValuationIndex = 0.8; //20% lower than org
+    var valuationLimit = getHousingPrice() * reduceValuationIndex;
+    var withdrawlLimit = valuationLimit*1.2;
 
-    var inputCPF = getCPF();
-    var outputCPF = 0.0;
+    // Main User
+    // Basic Retirement Sum
+    var brs = 90000;
+    if (getMainUserAge() <= 53){
+        brs = 90000;
+    } else if (getMainUserAge() == 54){
+        brs = 88000;
+    } else if (getMainUserAge() == 55){
+        brs = 85000;
+    } else if (getMainUserAge() == 56){
+        brs = 83000;
+    } else if (getMainUserAge() >= 57){
+        brs = 80500;
+    }
 
-    // If age <= 55, Basic Retirement Sum in OA must be > 171,000
-    if (getAge() <= 55){
-        outputCPF = inputCPF - 171000.00;
+    var mainCPF = getMainCPF();
+    var maxCPF1 = 0;
+    if (getMainCPF() <= valuationLimit){
+        maxCPF1 = getMainCPF();
     } else {
-        outputCPF = inputCPF - 161000.00;
+        // Set aside valuation limit
+        maxCPF1 = getMainCPF() - brs;
+        if (maxCPF1 >= withdrawlLimit){
+            maxCPF1 = withdrawlLimit;
+        }
     }
 
-    if (outputCPF < 0){
-        outputCPF = 0.0;
+    // Joint User
+    // Basic Retirement Sum
+    var jointbrs = 90000;
+    if (getJointUserAge() <= 53){
+        jointbrs = 90000;
+    } else if (getJointUserAge() == 54){
+        jointbrs = 88000;
+    } else if (getJointUserAge() == 55){
+        jointbrs = 85000;
+    } else if (getJointUserAge() == 56){
+        jointbrs = 83000;
+    } else if (getJointUserAge() >= 57){
+        jointbrs = 80500;
     }
+
+    mainCPF = getJointUserCPF();
+    var maxCPF2 = 0;
+    if (getJointUserCPF() <= valuationLimit){
+        maxCPF2 = getJointUserCPF();
+    } else {
+        // Set aside valuation limit
+        maxCPF2 = getJointUserCPF() - jointbrs;
+        if (maxCPF2 >= withdrawlLimit){
+            maxCPF2 = withdrawlLimit;
+        }
+    }
+
+    var outputCPF = maxCPF1 + maxCPF2;
+
 
     var getElement = document.getElementById('maxcpf');
     getElement.innerHTML = "Max CPF Withdrawal ($) <h1><strong>"+ outputCPF.toLocaleString()+"</strong></h1>";
-    return outputCPF;
+    return parseFloat(outputCPF);
 }
 
 function getNetDebtOverNetIncome(){
@@ -190,10 +221,6 @@ function checkEligibility() {
     if (calculateMonthlyPayment() < 0.3*(getGrossIncome())){
         eligibility = true;  // Throw MSR exceeded
     }
-   console.log("netdebt/income: " + getNetDebtOverNetIncome());
-   console.log("dsr: " + getDSR());
-   console.log("monthly payment: " + calculateMonthlyPayment());
-   console.log("30% gross income: " + getGrossIncome());
 
     var eligibilityStatus = document.getElementById('eligibilityStatusBelow');
     var eligibilityTop = document.getElementById('eligibilityStatus');
@@ -216,7 +243,7 @@ function getLTV(){
     var numProperties = 0; // Need to create numProperties
 
     numProperties = document.getElementById('property-count').value;
-    console.log(numProperties);
+ 
     var propertyType = document.getElementById('user-factor').value;
 
     // Buying HDB
@@ -224,42 +251,42 @@ function getLTV(){
         // If no outstanding house loan
         if (numProperties == 0) {
             // If loan tenure < 25 AND sum of loan tenure and age <= 65
-            if (getLoanYear() <= 25 && ((getLoanYear() + getAge()) <= 65)){
+            if (getLoanYear() <= 25 && ((getLoanYear() + getMainUserAge()) <= 65)){
                 ltv = 0.75;
-            } else if (getLoanYear() > 25 || ((getLoanYear() + getAge()) > 65)){
+            } else if (getLoanYear() > 25 || ((getLoanYear() + getMainUserAge()) > 65)){
                 ltv = 0.55;
             }
         } else if (numProperties == 1){ // 1 existing house loan
-            if (getLoanYear() <= 25 && ((getLoanYear() + getAge()) <= 65)){
+            if (getLoanYear() <= 25 && ((getLoanYear() + getMainUserAge()) <= 65)){
                 ltv = 0.45;
-            } else if (getLoanYear() > 25 || ((getLoanYear() + getAge()) > 65)){
+            } else if (getLoanYear() > 25 || ((getLoanYear() + getMainUserAge()) > 65)){
                 ltv = 0.25;
             }
         } else if (numProperties == 2){ // 2 existing house loan
-            if (getLoanYear() <= 25 && ((getLoanYear() + getAge()) <= 65)){
+            if (getLoanYear() <= 25 && ((getLoanYear() + getMainUserAge()) <= 65)){
                 ltv = 0.35;
-            } else if (getLoanYear() > 25 || ((getLoanYear() + getAge()) > 65)){
+            } else if (getLoanYear() > 25 || ((getLoanYear() + getMainUserAge()) > 65)){
                 ltv = 0.15;
             }
         }
     } else { // Buying Private Property
         if (numProperties == 0) {
             // If loan tenure < 30 AND sum of loan tenure and age <= 65
-            if (getLoanYear() <= 30 && ((getLoanYear() + getAge()) <= 65)){
+            if (getLoanYear() <= 30 && ((getLoanYear() + getMainUserAge()) <= 65)){
                 ltv = 0.75;
-            } else if (getLoanYear() > 30 || ((getLoanYear() + getAge()) > 65)){
+            } else if (getLoanYear() > 30 || ((getLoanYear() + getMainUserAge()) > 65)){
                 ltv = 0.55;
             }
         } else if (numProperties == 1){ // 1 existing house loan
-            if (getLoanYear() <= 30 && ((getLoanYear() + getAge()) <= 65)){
+            if (getLoanYear() <= 30 && ((getLoanYear() + getMainUserAge()) <= 65)){
                 ltv = 0.45;
-            } else if (getLoanYear() > 30 || ((getLoanYear() + getAge()) > 65)){
+            } else if (getLoanYear() > 30 || ((getLoanYear() + getMainUserAge()) > 65)){
                 ltv = 0.25;
             }
         } else if (numProperties == 2){ // 2 existing house loan
-            if (getLoanYear() <= 30 && ((getLoanYear() + getAge()) <= 65)){
+            if (getLoanYear() <= 30 && ((getLoanYear() + getMainUserAge()) <= 65)){
                 ltv = 0.35;
-            } else if (getLoanYear() > 30 || ((getLoanYear() + getAge()) > 65)){
+            } else if (getLoanYear() > 30 || ((getLoanYear() + getMainUserAge()) > 65)){
                 ltv = 0.15;
             }
         }
@@ -276,7 +303,7 @@ function calculateMaxLoan() {
     // Need to factor in LTV
 
     var maxLoan = getHousingPrice() * getLTV();
-    if (getAge() < 21){
+    if (getMainUserAge() < 21){
         maxLoan = 0;
     }
 
@@ -300,7 +327,6 @@ function recalculateAmt() {
     getDSR();
     getMaxCPFWithdrawal();
 
-    console.log("recalculate "+ getMaxCPFWithdrawal() + getSavings() + calculateMaxLoan());
     var total = parseFloat(getMaxCPFWithdrawal() + getSavings() + calculateMaxLoan());
 
     document.getElementById('savingsValue').innerHTML = "Housing Grant($) <h1><strong>"+ savings + "</strong></h1>";
@@ -319,3 +345,28 @@ $('a.page-scroll').bind('click', function(event) {
     event.preventDefault();
 });
 
+
+$(document).ready(function () {
+    $('#loanyearrange').slider({
+        formatter: function (value) {
+            return 'Current value: ' + value;
+        }
+    });
+    $('#loanyearrange').on('input change', function () {
+        $('#rangeText').text($(this).val());
+    });
+});
+
+
+function toggleJointApp() {
+    var x = document.getElementById("jointAppSection");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+        $("#single-btn").removeClass("btn-primary").addClass('btn-secondary');
+        $("#joint-btn").removeClass("btn-secondary").addClass('btn-primary');
+    } else {
+        x.style.display = "none";
+        $("#joint-btn").removeClass("btn-primary").addClass('btn-secondary');
+        $("#single-btn").removeClass("btn-secondary").addClass('btn-primary');
+    }
+}

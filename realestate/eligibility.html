@@ -1,37 +1,26 @@
 <style>
     .control-label{margin-top:10px;}
-    
+
 </style>
 <div class="row">
     <div style="margin:20px;">
-        <a href="#"><button class="btn btn-primary active" style="border-radius:5px;">
-            <i class="fa fa-user" aria-hidden="true"></i><br />Single Applicant</button></a>
-        <button class="btn btn-secondary rv_button" style="border-radius:5px;">
+        <button onclick="toggleJointApp()" id="single-btn" class="btn btn-primary active" style="border-radius:5px;">
+            <i class="fa fa-user" aria-hidden="true"></i><br />Single Applicant</button>
+        <button onclick="toggleJointApp()" id="joint-btn" class="btn btn-secondary rv_button" style="border-radius:5px;">
             <i class="fa fa-users" aria-hidden="true"></i><br />Joint Applicants</button>
     </div>
+         
     <form action="" id="eligibilityform" onsubmit="return false" class="form-horizontal">
-        
+           
         <div>
             <div class="cont_order mx-auto" style="margin-bottom:10px;">
                 <fieldset>
                     <div class="row col-md-12">
-                    <div class="col-md-7">
-                    <legend>Desired Loan Tenure</legend>
-                    
-                    <br />
-                    <div class="col-md-12">
-                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="5year" onclick="recalculateAmt()" />   5 Years Loan</label>
-                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="5year" onclick="recalculateAmt()" />  10 Years Loan</label>
-                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="15year" onclick="recalculateAmt()" />  15 Years Loan</label>
-                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="20year" onclick="recalculateAmt()" />  20 Years Loan</label><br/>
-                        
-                    </div>
-                    <div class="col-md-12">
-                        
-                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="25year" onclick="recalculateAmt()" />   25 Years Loan</label>
-                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="30year" onclick="recalculateAmt()" />  30 Years Loan</label>
-                        <label class='radiolabel'><input type="radio"  name="selectedcake" value="35year" onclick="recalculateAmt()" />  35 Years Loan</label>
-
+                    <span class="col-md-7">    
+                    <div>
+                        <legend>Desired Loan Tenure in Years:  </legend>
+                        <input id="loanyearrange" style="width:500px;" type="range" min="5" max="35" step="5" value="25" name="range" onclick="recalculateAmt()" />
+                        <label id="rangeText" style="font-size: 20px;padding-left: 15px;" />
                     </div>
                     <div class="form-group" style="margin-top:25px;">
                         <label class="col-md-4 control-label">Property Type</label>
@@ -48,13 +37,10 @@
                             <select class="form-control" id="property-count" name='propertycount' onclick="recalculateAmt()">
                                 <option value="0">0</option>
                                 <option value="1">1</option>
-                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
-                    
-                    
-                    </div>    
+                    </span>
                     <span class ="col-md-4" style="color:#fff">
                             <span class ="col-md-12"style="height:auto;background-color:#f2f2f2;font-size:20px;padding:12px;float:right;">
                                 <a class="page-scroll"  href="#loan-breakdown"><span id="moreinfo" class="dot" style="float:right;color:#fff;border-radius:25%;background-color:#d3d3d3;padding:5px;"><span class="icon"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></span></a>
@@ -120,9 +106,13 @@
                     </div>
                     </span>
                     
-                    <span class="col-md-5">
+                    <span class="col-md-5" id="jointAppSection" style="display:none;">
                         <div class="row col-md-12">
                             <legend>Joint Applicant Details</legend>
+                            <div class="col-md-10" >
+                                <label class="col-md-12 control-label" for="jointageinput">Age</label>
+                                <input id="jointageinput" name="textinput" type="text" class="form-control input-md" onclick="recalculateAmt()">
+                            </div>
                             <div class="col-md-10" >
                                 <label class="col-md-12 control-label" for="jointsalaryinput">Monthly Salary</label>
                                 <input id="jointsalaryinput" name="textinput" type="text" value="0.00" class="form-control input-md" onclick="recalculateAmt()">
@@ -137,7 +127,7 @@
                             </div>
                             <div class="col-md-10">
                                 <label class="col-md-12 control-label" for="debtinput">Monthly Debt i.e Car Loans</label>
-                                <input id="debtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onclick="recalculateAmt()">
+                                <input id="jointdebtinput" name="textinput" type="text" placeholder="" class="form-control input-md" onclick="recalculateAmt()">
                             </div>
                             <div class="col-md-10">
                                 <label class="col-md-12 control-label" for="jointgrantinput">Housing Grant</label>
