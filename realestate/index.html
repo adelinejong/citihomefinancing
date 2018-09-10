@@ -159,10 +159,11 @@
 									    	<input type="text" id="range2" value="" name="range" />
 									    </div>										    
 									    <div class="col-lg-4 d-flex justify-content-end">
-											<button class="primary-btn mt-50" style="height: 45px;" id="searchProp" >
-                                                                                            <a href="#propertyListing" style="color: white;">Search Properties</a>
-                                                                                            <span class="lnr lnr-arrow-right"></span></button>
-										</div>						  
+                                                                                <!--<form action="#propertyListing">-->
+                                                                                    <a class="primary-btn mt-50" href="#propertyListing" style="height: 45px;color:white" id="searchProp" >Search Properties
+                                                                                    <span class="lnr lnr-arrow-right"></span></a>
+                                                                                <!--</form>-->
+                                                                            </div>						  
 									  </div>
 							  	<!--</form>-->
 							</div>
@@ -190,7 +191,16 @@
                         				
 			<!-- Start city Area -->
 			<section class="city-area section-gap" style="background-color: #003b701f;" id="propertyListing">
-				<div class="container" id="displayProp">
+				<div class="container">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-md-8 header-text" style="text-align: center;">
+                                            <h1>Listing Properties - Result </h1>
+                                        </div>
+                                    </div>
+                                    <img src="img/loader.gif" style="display: none;text-align: center;" id="loadergif">
+                                    <div id="displayProp" style="margin-top: 30px;">
+                                        
+                                    </div>
 				</div>	
 			</section>
 			<!-- End city Area -->
@@ -264,109 +274,34 @@
 			<section class="property-area section-gap relative" id="propertyCompare">
 				<div class="overlay overlay-bg"></div>
 				<div class="container">
-					<div class="row d-flex justify-content-center">
-						<div class="col-md-8 pb-40 header-text">
-							<h1>Our Top Rated Properties</h1>
-							<p>
-								Who are in extremely love with eco friendly system.
-							</p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-4">
-							<div class="single-property">
-								<div class="images">
-									<img class="img-fluid mx-auto d-block" src="img/s1.jpg" alt="">
-									<span>For Sale</span>
-								</div>
-								
-								<div class="desc">
-									<div class="top d-flex justify-content-between">
-										<h4><a href="#">04 Bed Duplex</a></h4>
-										<h4>$3.5M</h4>
-									</div>
-									<div class="middle">
-										<div class="d-flex justify-content-start">
-										<p>Bed: 04</p>
-										<p>Bath: 03</p>
-										<p>Area: 750sqm</p>
-										</div>
-										<div class="d-flex justify-content-start">
-										<p>Pool: <span class="gr">Yes</span></p>
-										<p>Internet: <span class="rd">No</span></p>
-										<p>Cleaning: <span class="rd">No</span></p>
-										</div>
-									</div>
-									<div class="bottom d-flex justify-content-start">
-										<p><span class="lnr lnr-heart"></span> 15 Likes</p>
-										<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
-									</div>	
-								</div>	
-							</div>
-						</div>	
-						<div class="col-lg-4">
-							<div class="single-property">
-								<div class="images">
-									<img class="img-fluid mx-auto d-block" src="img/s2	.jpg" alt="">
-									<span>For Sale</span>
-								</div>
-								
-								<div class="desc">
-									<div class="top d-flex justify-content-between">
-										<h4><a href="#">04 Bed Duplex</a></h4>
-										<h4>$3.5M</h4>
-									</div>
-									<div class="middle">
-										<div class="d-flex justify-content-start">
-										<p>Bed: 04</p>
-										<p>Bath: 03</p>
-										<p>Area: 750sqm</p>
-										</div>
-										<div class="d-flex justify-content-start">
-										<p>Pool: <span class="gr">Yes</span></p>
-										<p>Internet: <span class="rd">No</span></p>
-										<p>Cleaning: <span class="rd">No</span></p>
-										</div>
-									</div>
-									<div class="bottom d-flex justify-content-start">
-										<p><span class="lnr lnr-heart"></span> 15 Likes</p>
-										<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
-									</div>	
-								</div>	
-							</div>
-						</div>	
-						<div class="col-lg-4">
-							<div class="single-property">
-								<div class="images">
-									<img class="img-fluid mx-auto d-block" src="img/s3.jpg" alt="">
-									<span>For Sale</span>
-								</div>
-								
-								<div class="desc">
-									<div class="top d-flex justify-content-between">
-										<h4><a href="#">04 Bed Duplex</a></h4>
-										<h4>$3.5M</h4>
-									</div>
-									<div class="middle">
-										<div class="d-flex justify-content-start">
-										<p>Bed: 04</p>
-										<p>Bath: 03</p>
-										<p>Area: 750sqm</p>
-										</div>
-										<div class="d-flex justify-content-start">
-										<p>Pool: <span class="gr">Yes</span></p>
-										<p>Internet: <span class="rd">No</span></p>
-										<p>Cleaning: <span class="rd">No</span></p>
-										</div>
-									</div>
-									<div class="bottom d-flex justify-content-start">
-										<p><span class="lnr lnr-heart"></span> 15 Likes</p>
-										<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
-									</div>	
-								</div>	
-							</div>
-						</div>																											
-					</div>
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-md-8 pb-40 header-text">
+                                                <h1>Compare Properties</h1>
+                                                <p>
+                                                    See the difference between two properties .
+                                                </p>
+                                        </div>
+                                    </div>
+                                    <div class="banner-content col-lg-12 col-md-12">
+                                        <div class="compare-field">
+                                            <div class="row">
+                                               <div class="col-lg-4 range-wrap">
+                                                   <p>Property A:</p>
+                                                    <input id="PropertyAinput" name="textinput" type="text" placeholder="Postal Code" class="form-control input-md">
+                                               </div>	
+                                                <div class="col-lg-4 range-wrap">
+                                                   <p>Property B:</p>
+                                                   <input id="PropertyBinput" name="textinput" type="text" placeholder="Postal Code" class="form-control input-md">
+                                                </div>										    
+                                               <div class="col-lg-4 d-flex justify-content-end">
+                                                    <button class="primary-btn mt-30" style="height: 45px;color:white" id="searchProp" onclick="compareFunction()">Compare Properties
+                                                        <span class="lnr lnr-arrow-right"></span>
+                                                    </button>
+                                               </div>						  
+                                            </div>
+                                        </div>
+                                        <iframe id="sqftmain" style="background-color:white" frameborder="0" width="100%"></iframe>
+                                    </div>
 				</div>	
 			</section>
 			<!-- End property Area -->	
@@ -402,7 +337,9 @@
 							<div class="single-footer-widget">
 								<h6>About Us</h6>
 								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.
+									Jazreel Siew
+                                                                        Terence Tan
+                                                                        Adeline Jong
 								</p>
 							</div>
 						</div>
@@ -513,6 +450,8 @@
 			<script src="js/main.js"></script>	
                         <script src="js/eligibilty.js"></script>
                         <script src="js/searchProp.js"></script>
-		
+                        <script src="//squarefoot.com.sg/js/iframeresizer.min.js"></script>
+                        <script src="//squarefoot.com.sg/component/sqftapi?token=0cqmhg351unr24s9bz6el8wij7yfpvtk&task=js"></script>
+                        <script src="js/compareProp.js"></script>
 		</body>
 	</html>

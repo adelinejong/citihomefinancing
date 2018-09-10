@@ -2225,6 +2225,33 @@ text-transform:uppercase .menutop-wrap .menu-top .list li:hover a {
   margin-top: 10px;
 }
 
+.compare-field {
+  background-color: #fff;
+  padding: 40px;
+}
+
+.compare-field .app-select {
+  border-radius: 0;
+  font-size: 13px;
+  font-weight: 300;
+  color: #777777;
+}
+
+@media (max-width: 1199px) {
+  .compare-field .app-select {
+    margin-bottom: 25px;
+  }
+}
+
+.compare-field .nice-select.open .list {
+  width: 100%;
+}
+
+.compare-field .range-wrap {
+  text-align: left;
+  margin-top: 10px;
+}
+
 .toggle-wrap {
   margin-bottom: 20px;
 }
@@ -2985,4 +3012,9 @@ h6 {
 .radiolabel{
     margin-right: 10px;
     font-weight: bold;
+}
+
+.displayNoneProp{
+    text-align: center;
+    margin-top: 20px;
 }
