@@ -1,0 +1,179 @@
+
+
+
+/**
+ *
+ * 
+ */
+@WebServlet(name = "detailSubmission", urlPatterns = {"/BidSubmissionServlet"})
+public class BidSubmissionServlet extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("userId");
+        String courseCode = (String) session.getAttribute("courseCode");
+        DecimalFormat fmt = new DecimalFormat("#.00");
+        String sectionName = (String) session.getAttribute("sectionName");
+        String edollarString = (String) request.getParameter("eDollars");
+
+        String currentRound = (String) session.getAttribute("currentRound");
+        BidDAO bidDAO = new BidDAO();
+        Bid bid = null;
+        StudentDAO studentDAO = new StudentDAO();
+        ArrayList<String> errorsBidSubmission = new ArrayList<>();
+        boolean successfulAdd = false;
+        double edollar = 0;
+        Student student = studentDAO.retrieveStudent(userId);
+        if(student == null){
+            response.sendRedirect("courseCatalogue.jsp");
+            return;
+        }
+        double currentEdollar = student.getEdollar();
+        //String userid, String bidAmount, String courseCode, String sectionCode, String status
+        try {
+            edollar = Double.parseDouble(edollarString);
+        } catch (NumberFormatException e) {
+            errorsBidSubmission.add("Error in edollar value");
+            session.setAttribute("errorsBidSubmission", errorsBidSubmission);
+        }
+
+        try {
+            bid = new Bid(userId, edollarString, courseCode, sectionName, "pending");
+
+        } catch (SQLException e) {
+            errorsBidSubmission.add("Unable to create bid");
+        } catch (NumberFormatException e) {
+            errorsBidSubmission.add("Error in edollar value");
+            session.setAttribute("errorsBidSubmission", errorsBidSubmission);
+        }
+
+//Round 1, Round 2 , No Round is Active
+        try {
+            if (bid != null) {
+
+                if (edollar < 10) {
+                    errorsBidSubmission.add("Bid too low. Minimum is $10");
+                    session.setAttribute("errorsBidSubmission", errorsBidSubmission);
+                    response.sendRedirect("courseCatalogue.jsp");
+                } else if (currentRound.equals("Round 1")) {
+                    ArrayList<String> validateError = bidValidation.round1ValidateBid(bid);
+
+                    if (bidValidation.round1ValidateBid(bid).isEmpty()) {
+
+                        successfulAdd = bidDAO.addBid(bid);
+                        if (successfulAdd) {
+                            //update edollar in database
+                            String edollarResult = fmt.format(currentEdollar - edollar);
+                            double eDollarPrice = Double.parseDouble(edollarResult);
+                            studentDAO.updateStudent(userId, eDollarPrice);
+                        }
+
+                        session.setAttribute("userId", userId);
+                        session.setAttribute("courseCode", courseCode);
+                        session.setAttribute("sectionName", sectionName);
+                        String bidEdollar = "" + fmt.format(edollar);
+                        session.setAttribute("edollarString", bidEdollar);
+
+                        session.setAttribute("currentRound", currentRound);
+                        response.sendRedirect("bidSummary.jsp");
+
+                    } else {
+                        session.setAttribute("errorsBidSubmission", bidValidation.round1ValidateBid(bid));
+                        response.sendRedirect("courseCatalogue.jsp");
+                    }
+                } else if (currentRound.equals("Round 2")) {
+                    String min = (String) session.getAttribute("minBid");
+                    double minBid = Double.parseDouble(min);
+                    if (edollar < minBid) {
+                        errorsBidSubmission.add("Bid is below minimum bid amount. Please bid at least $" + minBid);
+                        session.setAttribute("errorsBidSubmission", errorsBidSubmission);
+                        response.sendRedirect("courseCatalogue.jsp");
+                    } else if (bidValidation.round2ValidateBid(bid).isEmpty()) {
+
+                        successfulAdd = bidDAO.addBid(bid);
+                        if (successfulAdd) {
+                            String eDollarResult=fmt.format(currentEdollar-edollar);
+                            double eDollarPrice=Double.parseDouble(eDollarResult);
+                            studentDAO.updateStudent(userId, eDollarPrice);
+                        }
+
+                        boolean updatedBids = bidDAO.round2UpdateBids(courseCode, sectionName);
+                        if (updatedBids) {
+                            session.setAttribute("userId", userId);
+                            session.setAttribute("courseCode", courseCode);
+                            session.setAttribute("sectionName", sectionName);
+                            String bidEdollar = "" + fmt.format(edollar);
+                            session.setAttribute("edollarString", bidEdollar);
+
+                            session.setAttribute("currentRound", currentRound);
+                            response.sendRedirect("bidSummary.jsp");
+                        } else {
+                            errorsBidSubmission.add("Unable to update round 2 bids");
+                            session.setAttribute("errorsBidSubmission", errorsBidSubmission);
+                            response.sendRedirect("courseCatalogue.jsp");
+                        }
+                    } else {
+                        session.setAttribute("errorsBidSubmission", bidValidation.round2ValidateBid(bid));
+                        response.sendRedirect("courseCatalogue.jsp");
+                    }
+                } else {
+                    session.setAttribute("errorsBidSubmission", errorsBidSubmission);
+                    response.sendRedirect("courseCatalogue.jsp");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error at BidSubmissionServlet");
+            e.printStackTrace();
+        }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}

@@ -58,26 +58,26 @@ $(document).ready(function(){
 
          $(document).ready(function() {
             var form = $('#booking'); // contact form
-            var submit = $('.submit-btn'); // submit button
+            var submit = $('.SubmitLoanDetails-btn'); // SubmitLoanDetails button
             var alert = $('.alert-msg'); // alert div for show alert message
 
-            // form submit event
+            // form SubmitLoanDetails event
             form.on('submit', function(e) {
-                e.preventDefault(); // prevent default form submit
+                e.preventDefault(); // prevent default form SubmitLoanDetails
 
                 $.ajax({
                     url: 'booking.php', // form action url
-                    type: 'POST', // form submit method get/post
+                    type: 'POST', // form SubmitLoanDetails method get/post
                     dataType: 'html', // request type html/json/xml
                     data: form.serialize(), // serialize form data
                     beforeSend: function() {
                         alert.fadeOut();
-                        submit.html('Sending....'); // change submit button text
+                        submit.html('Sending....'); // change SubmitLoanDetails button text
                     },
                     success: function(data) {
                         alert.html(data).fadeIn(); // fade in response data
                         form.trigger('reset'); // reset form
-                        submit.attr("style", "display: none !important");; // reset submit button text
+                        submit.attr("style", "display: none !important");; // reset SubmitLoanDetails button text
                     },
                     error: function(e) {
                         console.log(e)

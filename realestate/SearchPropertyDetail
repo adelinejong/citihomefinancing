@@ -1,0 +1,19 @@
+
+
+public class SearchPropertyDetail {
+
+    /*
+    * location
+    property-type
+    bedroom
+    range
+    range2
+    *
+    * */
+    private String location;
+    private String propertyType;
+    private String bedroom;
+    private String priceRange;
+    private String areaRange;
+
+}
