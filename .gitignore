@@ -58,3 +58,5 @@ pom.xml.tag
 pom.xml
 pom.properties
 bin/
+/citihome/citihome/nbproject/private/
+/citihome/nbproject/private/
