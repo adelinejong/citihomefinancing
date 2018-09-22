@@ -343,6 +343,12 @@ function recalculateAmt() {
     document.getElementById('msrValue').innerHTML = "Monthly Payment Limit ($) <h1><strong>"+ getMSR() + "</strong></h1><small style='color:#007bff'>*Monthly Payment should be lower than Mortage Servicing Ratio (30%) x Gross Income.</small>";
     document.getElementById('actualMonthlyValue').innerHTML = "Actual Monthly Payment ($) <h1><strong>"+ calculateMonthlyPayment() + "</strong></h1>";
     document.getElementById('totalValueBelow').innerHTML = "Total Funds Available ($) <strong>"+ total.toLocaleString(); + "</strong>";
+    
+//    var request = $.ajax({
+//        url: '/LoanDetailSubmission',
+//        type: 'GET',
+//        data: { "user-factor": }
+//    });
 
 }
 

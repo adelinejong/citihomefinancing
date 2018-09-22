@@ -181,23 +181,20 @@ $(document).ready(function(){
                 $('#displayProp').html(displayNone);
                 document.getElementById("loadergif").style.display = "none";
             }
-//            <link href="css/ipropertyvendor.css" rel="stylesheet" type="text/css"/>
-//            var cssLink = document.createElement("link");
-//            cssLink.href = "css/ipropertyvendor.css"; 
-//            cssLink.rel = "stylesheet"; 
-//            cssLink.type = "text/css"; 
             
-//            var scriptLink = document.createElement("script");
-//            scriptLink.href = "js/ipropertyvendor.js";
+//        String searchDetails = district+ ", " +propertyType + ", " + bedroom + ", " + min_price_range + ", " + max_price_range + ", " + min_area_range + ", " + max_area_range;
+            var requestForDatabase = $.ajax({
+                url: 'http://localhost:8084/citihome/PropertyDetailSubmission',
+                type: 'GET',
+                data: { district: strLoc, propertyType:strProp, bedroom:strBedroom, min_price_range:priceRangeMin, max_price_range: priceRangeMax,min_area_range:areaRangeMin,max_area_range:areaRangeMax}
+            });
             
-//            var iframe = document.createElement('iframe');
-//            iframe.width = "1140";
-//            iframe.height = "740";
-//            iframe.srcdoc = data[0].outerHTML;
-//            iframe.appendChild(cssLink);
-//            iframe.appendChild(scriptLink);
-//            $('#displayProp').html(iframe);
-//          $('#displayProp').html("<iframe srcdoc="+data+"></iframe>");
+            requestForDatabase.done(function(data) {
+                console.log("Im done");
+            });
+            requestForDatabase.fail(function(jqXHR, textStatus) {
+                console.log("failed" + textStatus);
+            });
         });
 
         request.fail(function(jqXHR, textStatus) {

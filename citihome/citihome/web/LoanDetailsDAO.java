@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -108,22 +109,19 @@ public class LoanDetailsDAO {
     public void insertRecord(String loanDetails) {
         Connection conn = null;
         PreparedStatement ps = null;
-        if (successfulbids.isEmpty()) {
-            return;
-        }
+      
         String query = "";
-//        query = loanDetails.get
+        query = loanDetails;
 
         String insertSQLdata = "insert into calculator_logs(propertyType, valuationLimit,propertyCountInt,ageinputInt,salaryinputDouble,savingsinputDouble,cpfinputDouble,debtinputDouble,grantinputDouble,jointageinputInt,jointsalaryinputDouble,jointsavingsinputDouble,jointcpfinputDouble,jointdebtinputDouble,jointgrantinputDouble,maxLoan) VALUES (" + query + ")";
 
         try {
+            System.out.println("Im here");
             conn = ConnectionManager.getConnection();
-
-            for (Bid addbids : successfulbids) {
-                ps = conn.prepareStatement(insertSQLdata);
-                // ps.setString(1, propertyType);
-                ps.executeUpdate();
-            }
+            ps = conn.prepareStatement(insertSQLdata);
+            
+            // ps.setString(1, propertyType);
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
